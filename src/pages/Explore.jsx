@@ -84,7 +84,12 @@ function Explore() {
       <div>
         {isSearching && <p>Searching...</p>}
         {searchResults?.total > 10 && (
-          <PageNav prevHandler={handlePrev} nextHandler={handleNext} />
+          <PageNav
+            prevHandler={handlePrev}
+            nextHandler={handleNext}
+            currentPage={currentPage}
+            pageLength={searchResults.pages.length}
+          />
         )}
         {isLoading && (
           <h3>
@@ -129,7 +134,12 @@ function Explore() {
           </>
         )}
         {searchResults?.total > 10 && (
-          <PageNav prevHandler={handlePrev} nextHandler={handleNext} />
+          <PageNav
+            prevHandler={handlePrev}
+            nextHandler={handleNext}
+            currentPage={currentPage}
+            pageLength={searchResults.pages.length}
+          />
         )}
       </div>
     </>
