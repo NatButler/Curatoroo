@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import { loadResults, searchCollection } from '../api/metApi';
+import {
+  loadResults,
+  searchCollection as searchMetCollection,
+} from '../api/metApi';
+import { searchCollection as searchVaCollection } from '../api/vaApi';
 import PageNav from '../components/PageNav';
 
 function Explore() {
@@ -10,6 +14,7 @@ function Explore() {
   const [searchResults, setSearchResults] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [currentPageResults, setCurrentPageResults] = useState(null);
+  const [vaCurrentPageResults, setVaCurrentPageResults] = useState(null);
 
   useEffect(() => {
     setCurrentPageResults(null);
@@ -44,8 +49,10 @@ function Explore() {
       setSearchTerm(query);
 
       try {
-        const results = await searchCollection(query);
+        const results = await searchMetCollection(query);
+        const vaResults = await searchVaCollection(query);
         setSearchResults(results);
+        setVaCurrentPageResults(vaResults);
       } catch (err) {
         console.error(err);
       } finally {
@@ -117,6 +124,21 @@ function Explore() {
               <p>{`${currentPageResults.notPublicDomainCount} results are not in the public domain`}</p>
             )}
             {currentPageResults.fulfilled.map((object) => (
+              <div key={object.objectID}>
+                <p>
+                  {object.title}, {object.artistDisplayName}
+                </p>
+                <p>{object.objectDate}</p>
+                <p>{object.medium}</p>
+                {object.primaryImageSmall ? (
+                  <img src={object.primaryImageSmall} />
+                ) : (
+                  <p>No image available</p>
+                )}
+                <hr />
+              </div>
+            ))}
+            {vaCurrentPageResults.map((object) => (
               <div key={object.objectID}>
                 <p>
                   {object.title}, {object.artistDisplayName}
