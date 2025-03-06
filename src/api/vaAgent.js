@@ -15,11 +15,12 @@ const requests = {
 };
 
 const Search = {
-  query: (q) =>
+  query: (q, page = 1) =>
     requests.get(`/objects/search`, {
       params: {
         images_exist: 1,
         page_size: 10,
+        page,
         q,
       },
     }),

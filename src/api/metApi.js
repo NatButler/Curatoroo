@@ -1,5 +1,5 @@
 import metAgent from './metAgent';
-import { paginate } from '../utils/helpers';
+import { metObjectMap, paginate } from '../utils/helpers';
 
 export const searchCollection = async (q) => {
   const response = await metAgent.Search.query(q);
@@ -14,7 +14,9 @@ export const loadResults = async (ids) => {
         .map((r) => r.value.data);
 
       return {
-        fulfilled: fulfilledResponses.filter((d) => d.isPublicDomain),
+        fulfilled: fulfilledResponses
+          .filter((d) => d.isPublicDomain)
+          .map((object) => metObjectMap(object)),
         rejectedCount: response.filter((r) => r.status === 'rejected').length,
         notPublicDomainCount: fulfilledResponses.filter(
           (d) => !d.isPublicDomain
@@ -22,4 +24,8 @@ export const loadResults = async (ids) => {
       };
     }
   );
+};
+
+export const loadObject = async (id) => {
+  return metAgent.Objects.details(id);
 };

@@ -1,75 +1,21 @@
-import { useEffect, useState } from 'react';
-import {
-  loadResults,
-  searchCollection as searchMetCollection,
-} from '../api/metApi';
-import { searchCollection as searchVaCollection } from '../api/vaApi';
-import PageNav from '../components/PageNav';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchTerm, setSelectedResults } from '../store/searchSlice';
+import Results from '../components/Results';
+import VaResults from '../components/VaResults';
+import statuses from '../constants/ajaxStatus';
 
 function Explore() {
-  const [query, setQuery] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchResults, setSearchResults] = useState(null);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [currentPageResults, setCurrentPageResults] = useState(null);
-  const [vaCurrentPageResults, setVaCurrentPageResults] = useState(null);
-
-  useEffect(() => {
-    setCurrentPageResults(null);
-
-    const fetchResults = async () => {
-      const results = await loadResults(
-        searchResults[searchResults.pages[currentPage]]
-      );
-      setCurrentPageResults(results);
-      setIsLoading(false);
-    };
-
-    if (searchResults?.total) {
-      setIsLoading(true);
-      try {
-        fetchResults();
-      } catch (err) {
-        console.error(err);
-        setIsLoading(false);
-      }
-    }
-  }, [searchResults, currentPage]);
+  const dispatch = useDispatch();
+  const { searchTerm, selectedResults } = useSelector((state) => state.search);
+  const collection1 = useSelector((state) => state.met);
+  const collection2 = useSelector((state) => state.va);
+  const [query, setQuery] = useState(searchTerm);
 
   const handleSubmit = async (ev) => {
     ev.preventDefault();
-    setSearchResults(null);
-    setCurrentPageResults(null);
-    setCurrentPage(0);
-
     if (query) {
-      setIsSearching(true);
-      setSearchTerm(query);
-
-      try {
-        const results = await searchMetCollection(query);
-        const vaResults = await searchVaCollection(query);
-        setSearchResults(results);
-        setVaCurrentPageResults(vaResults);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsSearching(false);
-      }
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < searchResults.pages.length - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+      dispatch(setSearchTerm(query));
     }
   };
 
@@ -89,81 +35,34 @@ function Explore() {
         <button type="submit">Search</button>
       </form>
       <div>
-        {isSearching && <p>Searching...</p>}
-        {searchResults?.total > 10 && (
-          <PageNav
-            prevHandler={handlePrev}
-            nextHandler={handleNext}
-            currentPage={currentPage}
-            pageLength={searchResults.pages.length}
-          />
-        )}
-        {isLoading && (
-          <h3>
-            Loading results {searchResults.pages[currentPage]} for &quot;
-            {searchTerm}
-            &quot; ({searchResults.total})
-          </h3>
-        )}
-        {searchResults && !searchResults.total && (
+        {collection1.status === statuses.SEARCHING ||
+          (collection2.status === statuses.LOADING && <p>Searching...</p>)}
+        {(collection1.currentPageResults.fulfilled?.length > 0 ||
+          collection2.currentPageResults.fulfilled?.length > 0) && (
           <>
-            <p>There were no results for &quot;{searchTerm}&quot;</p>
+            <button
+              type="button"
+              onClick={() => dispatch(setSelectedResults('MET'))}
+              disabled={!collection1.results.total}
+            >
+              {collection1.results.total
+                ? `Collection 1 (${collection1.results.total})`
+                : 'Collection 1 returned 0 results'}
+            </button>
+            <button
+              type="button"
+              onClick={() => dispatch(setSelectedResults('VA'))}
+              disabled={!collection2.results.record_count}
+            >
+              {collection2.results.record_count
+                ? `Collection 2 (${collection2.results.record_count})`
+                : 'Collection 2 returned 0 results'}
+            </button>
           </>
-        )}
-        {currentPageResults && (
-          <>
-            <h3>
-              Displaying results {searchResults.pages[currentPage]} for &quot;
-              {searchTerm}
-              &quot; ({searchResults.total})
-            </h3>
-            {currentPageResults.rejectedCount > 0 && (
-              <p>{`${currentPageResults.rejectedCount} results failed to load`}</p>
-            )}
-            {currentPageResults.notPublicDomainCount > 0 && (
-              <p>{`${currentPageResults.notPublicDomainCount} results are not in the public domain`}</p>
-            )}
-            {currentPageResults.fulfilled.map((object) => (
-              <div key={object.objectID}>
-                <p>
-                  {object.title}, {object.artistDisplayName}
-                </p>
-                <p>{object.objectDate}</p>
-                <p>{object.medium}</p>
-                {object.primaryImageSmall ? (
-                  <img src={object.primaryImageSmall} />
-                ) : (
-                  <p>No image available</p>
-                )}
-                <hr />
-              </div>
-            ))}
-            {vaCurrentPageResults.map((object) => (
-              <div key={object.objectID}>
-                <p>
-                  {object.title}, {object.artistDisplayName}
-                </p>
-                <p>{object.objectDate}</p>
-                <p>{object.medium}</p>
-                {object.primaryImageSmall ? (
-                  <img src={object.primaryImageSmall} />
-                ) : (
-                  <p>No image available</p>
-                )}
-                <hr />
-              </div>
-            ))}
-          </>
-        )}
-        {searchResults?.total > 10 && (
-          <PageNav
-            prevHandler={handlePrev}
-            nextHandler={handleNext}
-            currentPage={currentPage}
-            pageLength={searchResults.pages.length}
-          />
         )}
       </div>
+      {selectedResults === 'MET' && <Results />}
+      {selectedResults === 'VA' && <VaResults />}
     </>
   );
 }
