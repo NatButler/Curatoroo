@@ -4,10 +4,11 @@ import statuses from '../constants/ajaxStatus';
 
 const initialState = {
   results: {
-    total: 0,
-    pages: [],
+    record_count: 0,
+    pageKeys: [],
+    pages: 0,
   },
-  currentPage: 0,
+  currentPage: 1,
   currentPageResults: {},
   status: statuses.IDLE,
 };
@@ -20,7 +21,7 @@ export const searchMetCollection = createAsyncThunk(
     }
 
     const response = await searchCollection(searchTerm);
-    thunkAPI.dispatch(loadObjects(response[response.pages[0]]));
+    thunkAPI.dispatch(loadObjects(response[response.pageKeys[0]]));
     return response;
   }
 );

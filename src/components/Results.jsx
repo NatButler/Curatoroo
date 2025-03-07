@@ -1,52 +1,56 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentPage } from '../store/metSlice';
+import { setCurrentPage as setMetCurrentPage } from '../store/metSlice';
+import { setCurrentPage as setVaCurrentPage } from '../store/vaSlice';
 import PageNav from '../components/PageNav';
 import statuses from '../constants/ajaxStatus';
 import ObjectCard from './ObjectCard';
 
-function Results() {
+function Results({ collection }) {
   const dispatch = useDispatch();
-  const { searchTerm } = useSelector((state) => state.search);
-  const collection = useSelector((state) => state.met);
+  const { searchTerm, selectedResults } = useSelector((state) => state.search);
   const { results, currentPageResults, status, currentPage } = collection;
 
   const handleNext = () => {
-    if (currentPage < results.pages.length - 1) {
-      dispatch(setCurrentPage(currentPage + 1));
+    if (currentPage < results.pages) {
+      if (selectedResults === 'MET')
+        dispatch(setMetCurrentPage(currentPage + 1));
+      if (selectedResults === 'VA') dispatch(setVaCurrentPage(currentPage + 1));
     }
   };
 
   const handlePrev = () => {
     if (currentPage > 0) {
-      dispatch(setCurrentPage(currentPage - 1));
+      if (selectedResults === 'MET')
+        dispatch(setMetCurrentPage(currentPage - 1));
+      if (selectedResults === 'VA') dispatch(setVaCurrentPage(currentPage - 1));
     }
   };
 
   if (status === statuses.LOADING) {
     return (
       <h3>
-        Loading results {results.pages[currentPage]} for &quot;
+        Loading results page {currentPage} of {results.pages} for &quot;
         {searchTerm}
-        &quot; ({results.total})
+        &quot; ({results.record_count})
       </h3>
     );
   }
 
   return (
     <div>
-      {currentPageResults && (
+      {results.pages > 0 && currentPageResults && (
         <>
           <h3>
-            Displaying results {results.pages[currentPage]} for &quot;
+            Displaying results page {currentPage} of {results.pages} for &quot;
             {searchTerm}
-            &quot; ({results.total})
+            &quot; ({results.record_count})
           </h3>
-          {results?.total > 10 && (
+          {results?.pages > 1 && (
             <PageNav
               prevHandler={handlePrev}
               nextHandler={handleNext}
               currentPage={currentPage}
-              pageLength={results.pages.length}
+              pages={results.pages}
             />
           )}
           {currentPageResults.rejectedCount > 0 && (
@@ -60,12 +64,12 @@ function Results() {
           ))}
         </>
       )}
-      {results?.total > 10 && (
+      {results?.pages > 1 && (
         <PageNav
           prevHandler={handlePrev}
           nextHandler={handleNext}
           currentPage={currentPage}
-          pageLength={results.pages.length}
+          pages={results.pages}
         />
       )}
     </div>

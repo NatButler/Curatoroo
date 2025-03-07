@@ -1,13 +1,13 @@
-function PageNav({ prevHandler, nextHandler, currentPage, pageLength }) {
+function PageNav({ prevHandler, nextHandler, currentPage, pages }) {
   return (
     <div>
-      <button type="button" onClick={prevHandler} disabled={currentPage === 0}>
+      <button type="button" onClick={prevHandler} disabled={currentPage === 1}>
         Prev
       </button>
       <button
         type="button"
         onClick={nextHandler}
-        disabled={currentPage === pageLength - 1}
+        disabled={currentPage === pages}
       >
         Next
       </button>

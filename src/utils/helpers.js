@@ -1,12 +1,14 @@
 export const paginate = (ids, size) => {
   const paginatedResults = {
-    total: ids ? ids.length : 0,
-    pages: [],
+    record_count: ids ? ids.length : 0,
+    pageKeys: [],
+    pages: 0,
   };
-  for (let i = 0; i < paginatedResults.total; i += size) {
+  for (let i = 0; i < paginatedResults.record_count; i += size) {
     const chunk = ids.slice(i, i + size);
     const page = `${i + 1}-${i + chunk.length}`;
-    paginatedResults.pages.push(page);
+    paginatedResults.pageKeys.push(page);
+    paginatedResults.pages += 1;
     paginatedResults[page] = chunk;
   }
   return paginatedResults;

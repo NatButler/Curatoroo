@@ -25,7 +25,9 @@ metPageMiddleware.startListening({
   actionCreator: setCurrentPage,
   effect: async (action, listenerApi) => {
     const { results } = listenerApi.getState().met;
-    listenerApi.dispatch(loadObjects(results[results.pages[action.payload]]));
+    listenerApi.dispatch(
+      loadObjects(results[results.pageKeys[action.payload - 1]])
+    );
   },
 });
 

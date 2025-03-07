@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerm, setSelectedResults } from '../store/searchSlice';
 import Results from '../components/Results';
-import VaResults from '../components/VaResults';
 import statuses from '../constants/ajaxStatus';
 
 function Explore() {
@@ -43,10 +42,10 @@ function Explore() {
             <button
               type="button"
               onClick={() => dispatch(setSelectedResults('MET'))}
-              disabled={!collection1.results.total}
+              disabled={!collection1.results.record_count}
             >
-              {collection1.results.total
-                ? `Collection 1 (${collection1.results.total})`
+              {collection1.results.record_count
+                ? `Collection 1 (${collection1.results.record_count})`
                 : 'Collection 1 returned 0 results'}
             </button>
             <button
@@ -61,8 +60,8 @@ function Explore() {
           </>
         )}
       </div>
-      {selectedResults === 'MET' && <Results />}
-      {selectedResults === 'VA' && <VaResults />}
+      {selectedResults === 'MET' && <Results collection={collection1} />}
+      {selectedResults === 'VA' && <Results collection={collection2} />}
     </>
   );
 }

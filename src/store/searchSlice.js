@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   searchTerm: '',
-  selectedResults: null,
+  selectedResults: 'MET',
 };
 
 export const searchSlice = createSlice({
