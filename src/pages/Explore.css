@@ -1,0 +1,31 @@
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  border: 2px solid var(--text);
+  width: 100%;
+  padding: 10px;
+}
+
+.sub-nav {
+  display: flex;
+  justify-content: center;
+}
+
+.sub-nav a {
+  padding: 5px 15px 6px;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  font-weight: 500;
+}
+
+.sub-nav a.active {
+  border-color: var(--text);
+}
+
+@media screen and (min-width: 800px) {
+  .sub-nav {
+    justify-content: flex-start;
+  }
+}

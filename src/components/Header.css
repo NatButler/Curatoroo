@@ -1,6 +1,6 @@
 .header {
-  background-color: var(--text);
-  padding: 15px 15px 20px;
+  background-color: var(--warm-yellow);
+  padding: 15px 15px 30px;
 }
 
 .header h1 {

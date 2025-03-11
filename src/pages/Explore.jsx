@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerm } from '../store/searchSlice';
 import ExploreLandingPage from './ExploreLandingPage';
 import statuses from '../constants/ajaxStatus';
+import './Explore.css';
 
 function Explore() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function Explore() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="search-bar">
         <label htmlFor="search" className="hidden">
           Search:
         </label>
@@ -33,6 +34,7 @@ function Explore() {
           onChange={(ev) => setQuery(ev.target.value)}
           value={query}
           required
+          placeholder="Type to search all collections"
         />
         <button type="submit">Search</button>
       </form>
@@ -41,7 +43,7 @@ function Explore() {
           (collection2.status === statuses.LOADING && <p>Searching...</p>)}
         {(collection1.currentPageResults.fulfilled?.length > 0 ||
           collection2.currentPageResults.fulfilled?.length > 0) && (
-          <nav>
+          <nav className="sub-nav">
             <ul className="reset">
               <NavLink to="/explore/collection1">
                 {collection1.results.record_count
