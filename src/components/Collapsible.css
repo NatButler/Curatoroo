@@ -15,11 +15,11 @@
 }
 
 .toggle-button_open {
-  /* background: url('../assets/expand_less.svg') no-repeat 98% 50%; */
+  background: url('../assets/expand_less.svg') no-repeat 99.5% 50%;
 }
 
 .toggle-button_closed {
-  /* background: url('../assets/expand_more.svg') no-repeat 98% 50%; */
+  background: url('../assets/expand_more.svg') no-repeat 99.5% 50%;
 }
 
 .toggle.content {
