@@ -80,11 +80,13 @@ function Results({ collection }) {
             <Collapsible
               label={`${currentPageResults.notPublicDomain.length} results are not in the public domain`}
             >
-              {currentPageResults.notPublicDomain.map((result) => (
-                <p>
-                  {result.title} | {result.artistDisplayName}
-                </p>
-              ))}
+              <ul>
+                {currentPageResults.notPublicDomain.map((result) => (
+                  <li key={result.objectID}>
+                    {result.title} | {result.artistDisplayName}
+                  </li>
+                ))}
+              </ul>
             </Collapsible>
           )}
           <div className="results-list-wrapper">
