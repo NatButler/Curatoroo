@@ -42,9 +42,10 @@ export const metSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(searchMetCollection.pending, (state) => {
-      state.status = statuses.SEARCHING;
-    });
+    builder.addCase(searchMetCollection.pending, () => ({
+      ...initialState,
+      status: statuses.SEARCHING,
+    }));
     builder.addCase(searchMetCollection.rejected, (state) => {
       state.status = statuses.ERROR;
     });

@@ -35,6 +35,7 @@ searchMiddleware.startListening({
   effect: async (action, listenerApi) => {
     listenerApi.dispatch(searchMetCollection({ searchTerm: action.payload }));
     listenerApi.dispatch(searchVaCollection({ searchTerm: action.payload }));
+    listenerApi.dispatch(setVaCurrentPage(1));
   },
 });
 
