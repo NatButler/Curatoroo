@@ -4,9 +4,10 @@ import { setCurrentPage as setMetCurrentPage } from '../store/metSlice';
 import { setCurrentPage as setVaCurrentPage } from '../store/vaSlice';
 import { setSelectedObject } from '../store/curateSlice';
 import PageNav from '../components/PageNav';
-import statuses from '../constants/ajaxStatus';
+import Collapsible from './Collapsible';
 import ObjectCard from './ObjectCard';
 import ExhibitionsModal from './ExhiibitionsModal';
+import statuses from '../constants/ajaxStatus';
 import collectionNames from '../constants/collectionNames';
 import './Results.css';
 
@@ -75,8 +76,16 @@ function Results({ collection }) {
           {currentPageResults.rejectedCount > 0 && (
             <p className="error">{`${currentPageResults.rejectedCount} results failed to load`}</p>
           )}
-          {currentPageResults.notPublicDomainCount > 0 && (
-            <p className="warning">{`${currentPageResults.notPublicDomainCount} results are not in the public domain`}</p>
+          {currentPageResults.notPublicDomain?.length > 0 && (
+            <Collapsible
+              label={`${currentPageResults.notPublicDomain.length} results are not in the public domain`}
+            >
+              {currentPageResults.notPublicDomain.map((result) => (
+                <p>
+                  {result.title} | {result.artistDisplayName}
+                </p>
+              ))}
+            </Collapsible>
           )}
           <div className="results-list-wrapper">
             <ul className="reset results-list">

@@ -18,7 +18,7 @@ export const loadResults = async (ids) => {
           vaRecordObjectMap(object)
         ),
         rejectedCount: response.filter((r) => r.status === 'rejected').length,
-        notPublicDomainCount: 0,
+        notPublicDomain: [],
       };
     }
   );

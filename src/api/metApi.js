@@ -18,9 +18,7 @@ export const loadResults = async (ids) => {
           .filter((d) => d.isPublicDomain)
           .map((object) => metObjectMap(object)),
         rejectedCount: response.filter((r) => r.status === 'rejected').length,
-        notPublicDomainCount: fulfilledResponses.filter(
-          (d) => !d.isPublicDomain
-        ).length,
+        notPublicDomain: fulfilledResponses.filter((d) => !d.isPublicDomain),
       };
     }
   );

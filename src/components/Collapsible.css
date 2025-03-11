@@ -1,0 +1,33 @@
+.toggle-wrap {
+  background-color: var(--warm-yellow);
+  margin-bottom: 15px;
+}
+
+.toggle-button {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+  color: var(--text);
+  padding: 9px 10px 7px;
+  background-color: var(--warm-yellow);
+}
+
+.toggle-button_open {
+  /* background: url('../assets/expand_less.svg') no-repeat 98% 50%; */
+}
+
+.toggle-button_closed {
+  /* background: url('../assets/expand_more.svg') no-repeat 98% 50%; */
+}
+
+.toggle.content {
+  padding: 0 15px;
+}
+
+.content-parent {
+  height: 0px;
+  overflow: hidden;
+  transition: height ease 0.3s;
+}
