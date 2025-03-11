@@ -1,6 +1,8 @@
+import './PageNav.css';
+
 function PageNav({ prevHandler, nextHandler, currentPage, pages }) {
   return (
-    <div>
+    <nav className="page-nav">
       <button type="button" onClick={prevHandler} disabled={currentPage === 1}>
         Prev
       </button>
@@ -11,7 +13,7 @@ function PageNav({ prevHandler, nextHandler, currentPage, pages }) {
       >
         Next
       </button>
-    </div>
+    </nav>
   );
 }
 

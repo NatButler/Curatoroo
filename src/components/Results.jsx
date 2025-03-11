@@ -1,29 +1,47 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPage as setMetCurrentPage } from '../store/metSlice';
 import { setCurrentPage as setVaCurrentPage } from '../store/vaSlice';
+import { setSelectedObject } from '../store/curateSlice';
 import PageNav from '../components/PageNav';
 import statuses from '../constants/ajaxStatus';
 import ObjectCard from './ObjectCard';
+import ExhibitionsModal from './ExhiibitionsModal';
+import collectionNames from '../constants/collectionNames';
+import './Results.css';
 
 function Results({ collection }) {
   const dispatch = useDispatch();
   const { searchTerm, selectedResults } = useSelector((state) => state.search);
   const { results, currentPageResults, status, currentPage } = collection;
+  const [isExhibiitionModalOpen, setIsExhibitionModalOpen] = useState(false);
 
   const handleNext = () => {
     if (currentPage < results.pages) {
-      if (selectedResults === 'MET')
+      if (selectedResults === collectionNames.MET)
         dispatch(setMetCurrentPage(currentPage + 1));
-      if (selectedResults === 'VA') dispatch(setVaCurrentPage(currentPage + 1));
+      if (selectedResults === collectionNames.VA)
+        dispatch(setVaCurrentPage(currentPage + 1));
     }
   };
 
   const handlePrev = () => {
     if (currentPage > 0) {
-      if (selectedResults === 'MET')
+      if (selectedResults === collectionNames.MET)
         dispatch(setMetCurrentPage(currentPage - 1));
-      if (selectedResults === 'VA') dispatch(setVaCurrentPage(currentPage - 1));
+      if (selectedResults === collectionNames.VA)
+        dispatch(setVaCurrentPage(currentPage - 1));
     }
+  };
+
+  const handleOpenExhibitionModal = (object) => {
+    dispatch(setSelectedObject(object));
+    setIsExhibitionModalOpen(true);
+  };
+
+  const handleCloseExhibitionModal = () => {
+    setIsExhibitionModalOpen(false);
+    setSelectedObject(null);
   };
 
   if (status === statuses.LOADING) {
@@ -54,14 +72,27 @@ function Results({ collection }) {
             />
           )}
           {currentPageResults.rejectedCount > 0 && (
-            <p>{`${currentPageResults.rejectedCount} results failed to load`}</p>
+            <p className="error">{`${currentPageResults.rejectedCount} results failed to load`}</p>
           )}
           {currentPageResults.notPublicDomainCount > 0 && (
-            <p>{`${currentPageResults.notPublicDomainCount} results are not in the public domain`}</p>
+            <p className="warning">{`${currentPageResults.notPublicDomainCount} results are not in the public domain`}</p>
           )}
-          {currentPageResults?.fulfilled?.map((object) => (
-            <ObjectCard key={object.objectID} object={object} />
-          ))}
+          <div className="results-list-wrapper">
+            <ul className="reset results-list">
+              {currentPageResults?.fulfilled?.map((object) => (
+                <li key={object.objectID}>
+                  <ObjectCard object={object}>
+                    <button
+                      type="button"
+                      onClick={() => handleOpenExhibitionModal(object)}
+                    >
+                      Add to exhibition
+                    </button>
+                  </ObjectCard>
+                </li>
+              ))}
+            </ul>
+          </div>
         </>
       )}
       {results?.pages > 1 && (
@@ -72,6 +103,10 @@ function Results({ collection }) {
           pages={results.pages}
         />
       )}
+      <ExhibitionsModal
+        isOpen={isExhibiitionModalOpen}
+        onClose={handleCloseExhibitionModal}
+      />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import collectionNames from '../constants/collectionNames';
 
 const initialState = {
   searchTerm: '',
-  selectedResults: 'MET',
+  selectedResults: collectionNames.MET,
 };
 
 export const searchSlice = createSlice({

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerm, setSelectedResults } from '../store/searchSlice';
 import Results from '../components/Results';
 import statuses from '../constants/ajaxStatus';
+import collectionNames from '../constants/collectionNames';
 
 function Explore() {
   const dispatch = useDispatch();
@@ -20,9 +21,10 @@ function Explore() {
 
   return (
     <>
-      <h2>Explore</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="search">Search:</label>
+        <label htmlFor="search" className="hidden">
+          Search:
+        </label>
         <input
           type="search"
           id="search"
@@ -41,7 +43,7 @@ function Explore() {
           <>
             <button
               type="button"
-              onClick={() => dispatch(setSelectedResults('MET'))}
+              onClick={() => dispatch(setSelectedResults(collectionNames.MET))}
               disabled={!collection1.results.record_count}
             >
               {collection1.results.record_count
@@ -50,7 +52,7 @@ function Explore() {
             </button>
             <button
               type="button"
-              onClick={() => dispatch(setSelectedResults('VA'))}
+              onClick={() => dispatch(setSelectedResults(collectionNames.VA))}
               disabled={!collection2.results.record_count}
             >
               {collection2.results.record_count
@@ -60,8 +62,12 @@ function Explore() {
           </>
         )}
       </div>
-      {selectedResults === 'MET' && <Results collection={collection1} />}
-      {selectedResults === 'VA' && <Results collection={collection2} />}
+      {selectedResults === collectionNames.MET && (
+        <Results collection={collection1} />
+      )}
+      {selectedResults === collectionNames.VA && (
+        <Results collection={collection2} />
+      )}
     </>
   );
 }

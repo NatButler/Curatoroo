@@ -1,0 +1,22 @@
+.modal {
+  width: 70%;
+  height: 500px;
+  padding: 2rem;
+  border: none;
+  position: relative;
+}
+
+.modal::backdrop {
+  background: hsl(0 0% 0% / 50%);
+}
+
+button.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0;
+  background: none;
+  margin: 0 !important;
+  border: none;
+  cursor: pointer;
+}

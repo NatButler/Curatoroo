@@ -1,8 +1,27 @@
+import { vaRecordObjectMap } from '../utils/helpers';
 import vaAgent from './vaAgent';
 
 export const searchCollection = async (q, page) => {
   const response = await vaAgent.Search.query(q, page);
   return response;
+};
+
+export const loadResults = async (ids) => {
+  return Promise.allSettled(ids.map((id) => vaAgent.Objects.details(id))).then(
+    (response) => {
+      const fulfilledResponses = response
+        .filter((r) => r.status === 'fulfilled')
+        .map((r) => r.value);
+
+      return {
+        fulfilled: fulfilledResponses.map((object) =>
+          vaRecordObjectMap(object)
+        ),
+        rejectedCount: response.filter((r) => r.status === 'rejected').length,
+        notPublicDomainCount: 0,
+      };
+    }
+  );
 };
 
 export const loadObject = async (id) => {

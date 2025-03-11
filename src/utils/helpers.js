@@ -1,3 +1,5 @@
+import collectionNames from '../constants/collectionNames';
+
 export const paginate = (ids, size) => {
   const paginatedResults = {
     record_count: ids ? ids.length : 0,
@@ -15,24 +17,51 @@ export const paginate = (ids, size) => {
 };
 
 export const metObjectMap = (object) => ({
-  collection: 'MET',
+  collection: collectionNames.MET,
   objectID: object.objectID.toString(),
   title: object.title,
-  artistDisplayName: object.artistDisplayName,
+  artistDisplayName: object.artistDisplayName || '(Artist unknown)',
   objectDate: object.objectDate,
   medium: object.medium,
   primaryImageSmall: object.primaryImageSmall,
 });
 
 export const vaObjectMap = (object) => ({
-  collection: 'VA',
+  collection: collectionNames.VA,
   objectID: object.systemNumber,
   title: object._primaryTitle,
-  artistDisplayName: object._primaryMaker.name,
+  artistDisplayName: object._primaryMaker?.name || '(Maker unknown)',
   objectDate: object._primaryDate,
   medium: object.objectType,
-  primaryImageSmall: object._images._primary_thumbnail.replace(
+  primaryImageSmall: object._images?._primary_thumbnail.replace(
     '!100,100',
     '!700,700'
   ),
 });
+
+export const vaRecordObjectMap = (object) => ({
+  collection: collectionNames.VA,
+  objectID: object.record.systemNumber,
+  title: object.record?.titles[0].title || '',
+  artistDisplayName:
+    (object.record?.artistMakerPerson.length &&
+      object.record.artistMakerPerson[0].name?.text) ||
+    object.record?.artistMakerOrganisations[0].name.text,
+  objectDate: object.record?.productionDates[0].date.text || '(Maker unknown)',
+  medium: object.record?.objectType,
+  primaryImageSmall: object.meta.images._primary_thumbnail.replace(
+    '!100,100',
+    '!700,700'
+  ),
+});
+
+export const filterExhibits = (exhibits, action) =>
+  exhibits.filter((exhibit) => {
+    if (
+      exhibit.objectID === action.payload.object.objectID &&
+      exhibit.collection === action.payload.object.collection
+    ) {
+      return false;
+    }
+    return true;
+  });

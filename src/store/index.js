@@ -1,17 +1,34 @@
-import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
+import {
+  configureStore,
+  createListenerMiddleware,
+  isAnyOf,
+} from '@reduxjs/toolkit';
 import searchReducer, { setSearchTerm } from './searchSlice';
 import metReducer, {
   loadObjects,
   searchMetCollection,
   setCurrentPage,
 } from './metSlice';
-import { setCurrentPage as setVaCurrentPage } from './vaSlice';
-import vaReducer, { searchVaCollection } from './vaSlice';
-import curateReducer from './curateSlice';
+import vaReducer, {
+  searchVaCollection,
+  setCurrentPage as setVaCurrentPage,
+} from './vaSlice';
+import curateReducer, {
+  addExhibition,
+  addObjectToExhibition,
+  deleteExhibition,
+  editExhibition,
+  loadExhibition,
+  removeObjectFromExhibition,
+  setSelectedExhibitionId,
+} from './curateSlice';
+import statuses from '../constants/ajaxStatus';
 
 const searchMiddleware = createListenerMiddleware();
 const metPageMiddleware = createListenerMiddleware();
 const vaPageMiddleware = createListenerMiddleware();
+const exhibitionMiddleware = createListenerMiddleware();
+const localStorageMiddleware = createListenerMiddleware();
 
 searchMiddleware.startListening({
   actionCreator: setSearchTerm,
@@ -41,6 +58,37 @@ vaPageMiddleware.startListening({
   },
 });
 
+exhibitionMiddleware.startListening({
+  actionCreator: setSelectedExhibitionId,
+  effect: async (action, listenerApi) => {
+    if (action.payload.load) {
+      listenerApi.dispatch(loadExhibition(action.payload.id));
+    }
+  },
+});
+
+localStorageMiddleware.startListening({
+  matcher: isAnyOf(
+    addObjectToExhibition,
+    removeObjectFromExhibition,
+    addExhibition,
+    deleteExhibition,
+    editExhibition
+  ),
+  effect: (action, listenerApi) => {
+    localStorage.setItem(
+      'exhibitions',
+      JSON.stringify(listenerApi.getState().curate.exhibitions)
+    );
+  },
+});
+
+const reHydrateExhibitions = () => {
+  if (localStorage.getItem('exhibitions') !== null) {
+    return JSON.parse(localStorage.getItem('exhibitions'));
+  }
+};
+
 export const store = configureStore({
   reducer: {
     search: searchReducer,
@@ -48,9 +96,20 @@ export const store = configureStore({
     met: metReducer,
     va: vaReducer,
   },
+  preloadedState: {
+    curate: {
+      exhibitions: reHydrateExhibitions(),
+      selectedExhibitionId: '',
+      currentExhibitionObjects: [],
+      selectedObject: {},
+      status: statuses.IDLE,
+    },
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .prepend(searchMiddleware.middleware)
       .prepend(metPageMiddleware.middleware)
-      .prepend(vaPageMiddleware.middleware),
+      .prepend(vaPageMiddleware.middleware)
+      .prepend(exhibitionMiddleware.middleware)
+      .prepend(localStorageMiddleware.middleware),
 });

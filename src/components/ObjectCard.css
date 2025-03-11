@@ -1,0 +1,8 @@
+.object-card {
+  color: var(--white);
+  width: 250px;
+}
+
+.object-card img {
+  max-width: 100%;
+}

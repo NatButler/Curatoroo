@@ -7,4 +7,41 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --warm-yellow: #ffb81c;
+  --red: #d5281b;
+  --dark-red: #8a1538;
+  --orange: #ed8b00;
+  --grey: #f0f4f5;
+  --mid-grey: #d8dde0;
+  --dark-grey: #4c6272;
+  --blue: #005eb8;
+  --text: #212b32;
+  --white: #ffffff;
+  --green: #007f3b;
+  --background: #eee;
+  --alt-background: rgba(0, 0, 0, 0.2); /* rgb(255, 244, 209); */
+  --pale-yellow: #fff9c4;
+  --pale-blue: rgb(77, 134, 193);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: var(--blue);
+}
+
+/* Helpers */
+ul.reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }

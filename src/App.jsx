@@ -5,6 +5,7 @@ import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import Explore from './pages/Explore';
 import Curate from './pages/Curate';
+import SaveExhibition from './pages/SaveExhibition';
 import Exhibition from './pages/Exhibition';
 import './App.css';
 
@@ -13,12 +14,16 @@ function App() {
     <>
       <SkipToContent />
       <Header />
-      <main id="main">
+      <main id="main" className="main">
         <Routes>
           <Route path="*" element={<NotFound />}></Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/curate" element={<Curate />}></Route>
+          <Route
+            path="/curate/save-exhibition/:id?"
+            element={<SaveExhibition />}
+          ></Route>
           <Route path="/curate/:id" element={<Exhibition />}></Route>
         </Routes>
       </main>

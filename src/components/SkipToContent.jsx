@@ -1,3 +1,5 @@
+import './SkipToContent.css';
+
 function SkipToContent() {
   return (
     <a className="skip-to-content-link" href="#main">
