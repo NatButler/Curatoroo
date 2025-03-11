@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loadResults, searchCollection } from '../api/metApi';
 import statuses from '../constants/ajaxStatus';
+import collectionNames from '../constants/collectionNames';
 
 const initialState = {
   results: {
@@ -11,6 +12,7 @@ const initialState = {
   currentPage: 1,
   currentPageResults: {},
   status: statuses.IDLE,
+  collectionName: collectionNames.MET,
 };
 
 export const searchMetCollection = createAsyncThunk(

@@ -2,12 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { searchCollection } from '../api/vaApi';
 import { vaObjectMap } from '../utils/helpers';
 import statuses from '../constants/ajaxStatus';
+import collectionNames from '../constants/collectionNames';
 
 const initialState = {
   results: {},
   currentPageResults: {},
   currentPage: 1,
   status: statuses.IDLE,
+  collectionName: collectionNames.VA,
 };
 
 export const searchVaCollection = createAsyncThunk(

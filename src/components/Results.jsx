@@ -12,24 +12,25 @@ import './Results.css';
 
 function Results({ collection }) {
   const dispatch = useDispatch();
-  const { searchTerm, selectedResults } = useSelector((state) => state.search);
-  const { results, currentPageResults, status, currentPage } = collection;
+  const { searchTerm } = useSelector((state) => state.search);
+  const { results, currentPageResults, status, currentPage, collectionName } =
+    collection;
   const [isExhibiitionModalOpen, setIsExhibitionModalOpen] = useState(false);
 
   const handleNext = () => {
     if (currentPage < results.pages) {
-      if (selectedResults === collectionNames.MET)
+      if (collectionName === collectionNames.MET)
         dispatch(setMetCurrentPage(currentPage + 1));
-      if (selectedResults === collectionNames.VA)
+      if (collectionName === collectionNames.VA)
         dispatch(setVaCurrentPage(currentPage + 1));
     }
   };
 
   const handlePrev = () => {
     if (currentPage > 0) {
-      if (selectedResults === collectionNames.MET)
+      if (collectionName === collectionNames.MET)
         dispatch(setMetCurrentPage(currentPage - 1));
-      if (selectedResults === collectionNames.VA)
+      if (collectionName === collectionNames.VA)
         dispatch(setVaCurrentPage(currentPage - 1));
     }
   };

@@ -12,7 +12,6 @@ function Curate() {
 
   return (
     <>
-      <h2>Curate</h2>
       <Link to="/curate/save-exhibition">Add exhibition</Link>
       <ul>
         {exhibitions.map((exhibition) => (
