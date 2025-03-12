@@ -18,6 +18,11 @@ function Results({ collection }) {
     collection;
   const [isExhibiitionModalOpen, setIsExhibitionModalOpen] = useState(false);
 
+  const handleStart = () => {
+    if (collectionName === collectionNames.MET) dispatch(setMetCurrentPage(1));
+    if (collectionName === collectionNames.VA) dispatch(setVaCurrentPage(1));
+  };
+
   const handleNext = () => {
     if (currentPage < results.pages) {
       if (collectionName === collectionNames.MET)
@@ -34,6 +39,13 @@ function Results({ collection }) {
       if (collectionName === collectionNames.VA)
         dispatch(setVaCurrentPage(currentPage - 1));
     }
+  };
+
+  const handleEnd = () => {
+    if (collectionName === collectionNames.MET)
+      dispatch(setMetCurrentPage(results.pages));
+    if (collectionName === collectionNames.VA)
+      dispatch(setVaCurrentPage(results.pages));
   };
 
   const handleOpenExhibitionModal = (object) => {
@@ -69,6 +81,8 @@ function Results({ collection }) {
             <PageNav
               prevHandler={handlePrev}
               nextHandler={handleNext}
+              startHandler={handleStart}
+              endHandler={handleEnd}
               currentPage={currentPage}
               pages={results.pages}
             />
@@ -111,6 +125,8 @@ function Results({ collection }) {
         <PageNav
           prevHandler={handlePrev}
           nextHandler={handleNext}
+          startHandler={handleStart}
+          endHandler={handleEnd}
           currentPage={currentPage}
           pages={results.pages}
         />
