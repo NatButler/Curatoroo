@@ -4,6 +4,7 @@ import {
   selectExhibitionsToAddObject,
 } from '../store/curateSlice';
 import Modal from './Modal';
+import './ExhibitionsModal.css';
 
 function ExhibitionsModal({ isOpen, onClose }) {
   const dispatch = useDispatch();
@@ -17,7 +18,7 @@ function ExhibitionsModal({ isOpen, onClose }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <h3>Select an exhibition to add to</h3>
-      <ul>
+      <ul className="reset modal-exhibition-list">
         {exhibitions.map((exhibition) => (
           <li key={exhibition.id}>
             <button

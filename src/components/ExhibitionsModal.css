@@ -1,0 +1,12 @@
+.modal-exhibition-list {
+  flex-direction: column;
+  gap: 5px !important;
+  margin-bottom: 15px !important;
+}
+
+.modal-exhibition-list li button {
+  border: 1px solid;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 10px;
+}
