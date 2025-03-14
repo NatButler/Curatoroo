@@ -5,7 +5,7 @@ function ExploreLandingPage({ searchResults }) {
     return <Navigate to="/explore/collection1" replace />;
   }
 
-  return <p>Use the search field above to explore both collections.</p>;
+  return <p>Use the search field above to explore all collections.</p>;
 }
 
 export default ExploreLandingPage;
