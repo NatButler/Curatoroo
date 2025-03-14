@@ -45,7 +45,7 @@ export const vaSlice = createSlice({
       state.currentPageResults = {
         fulfilled: action.payload.records.map((object) => vaObjectMap(object)),
         rejectedCount: 0,
-        notPublicDomainCount: 0,
+        notPublicDomain: [],
       };
     });
   },
