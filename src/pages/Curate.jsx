@@ -39,7 +39,7 @@ function Curate() {
                 type="button"
                 onClick={() => handleDeleteExhibition(exhibition.id)}
               >
-                Delete
+                Delete exhibition
               </button>
             </div>
           </li>
