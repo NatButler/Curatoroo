@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addObjectToExhibition,
@@ -34,6 +35,12 @@ function ExhibitionsModal({ isOpen, onClose }) {
         If an exhibition isn't displayed above, it already contains the object
         you're adding.
       </i>
+      <hr />
+      <nav className="sub-nav">
+        <Link to="/curate/save-exhibition" className="create-exhibition">
+          Create a new exhibition
+        </Link>
+      </nav>
     </Modal>
   );
 }
