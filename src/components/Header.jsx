@@ -5,7 +5,7 @@ function Header() {
   return (
     <header className="header">
       <h1>
-        <Link to="/">Curatoroo</Link>
+        <Link to="/">Explore & curate app</Link>
       </h1>
       <nav>
         <ul className="reset">
