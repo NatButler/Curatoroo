@@ -6,3 +6,7 @@
 .object-card img {
   max-width: 100%;
 }
+
+.object-card.dark {
+  color: var(--text);
+}
