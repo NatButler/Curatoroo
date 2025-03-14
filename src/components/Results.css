@@ -10,12 +10,6 @@ p.warning {
   padding: 5px 10px;
 }
 
-.results-list-wrapper {
-  background-color: var(--text);
-  padding: 25px;
-  overflow-x: scroll;
-}
-
 .results-list {
   padding: 15px;
   flex-direction: column;

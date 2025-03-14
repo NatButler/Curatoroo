@@ -7,6 +7,7 @@ import PageNav from '../components/PageNav';
 import Collapsible from './Collapsible';
 import ObjectCard from './ObjectCard';
 import ExhibitionsModal from './ExhiibitionsModal';
+import ResultsSlider from './ResultsSlider';
 import statuses from '../constants/ajaxStatus';
 import collectionNames from '../constants/collectionNames';
 import './Results.css';
@@ -103,7 +104,14 @@ function Results({ collection }) {
               </ul>
             </Collapsible>
           )}
-          <div className="results-list-wrapper">
+          <ResultsSlider
+            resultsLength={
+              currentPageResults?.fulfilled?.length -
+              currentPageResults?.notPublicDomain?.length -
+              currentPageResults?.rejectedCount
+            }
+            itemWidth={250}
+          >
             <ul className="reset results-list">
               {currentPageResults?.fulfilled?.map((object) => (
                 <li key={object.objectID}>
@@ -111,6 +119,7 @@ function Results({ collection }) {
                     <button
                       type="button"
                       onClick={() => handleOpenExhibitionModal(object)}
+                      className="btn-action"
                     >
                       Add to exhibition
                     </button>
@@ -118,7 +127,7 @@ function Results({ collection }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </ResultsSlider>
         </>
       )}
       {results?.pages > 1 && (
