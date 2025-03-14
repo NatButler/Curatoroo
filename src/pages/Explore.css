@@ -1,16 +1,27 @@
 .search-bar {
   margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
 }
 
 .search-bar input {
   border: 2px solid var(--text);
-  width: 100%;
   padding: 10px;
+  flex: 1;
+}
+
+.search-bar button {
+  padding: 5px 15px;
+  background-color: var(--green);
+  border: none;
+  color: var(--white);
+  font-weight: 700;
 }
 
 .sub-nav {
   display: flex;
   justify-content: center;
+  margin-bottom: 15px;
 }
 
 .sub-nav a {
