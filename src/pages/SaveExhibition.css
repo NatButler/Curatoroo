@@ -1,0 +1,26 @@
+.save-exhibition-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.save-exhibition-form input,
+.save-exhibition-form textarea {
+  border: 2px solid var(--text);
+  padding: 5px;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
+
+.save-exhibition-form textarea {
+  resize: vertical;
+}
+
+.save-exhibition-form button {
+  padding: 8px 10px;
+  background-color: var(--green);
+  color: var(--white);
+  border: none;
+  font-weight: 700;
+  margin-top: 10px;
+}

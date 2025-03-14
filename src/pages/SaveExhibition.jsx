@@ -7,6 +7,7 @@ import {
   selectExhibition,
   setSelectedExhibitionId,
 } from '../store/curateSlice';
+import './SaveExhibition.css';
 
 const initFormState = {
   title: '',
@@ -51,9 +52,11 @@ function SaveExhibition() {
 
   return (
     <>
-      <h3>Save exhibition</h3>
-      <form onSubmit={handleSubmit} key={id}>
+      <h2>Save exhibition</h2>
+      <form onSubmit={handleSubmit} className="save-exhibition-form">
         <label htmlFor="title">
+          Title:
+          <br />
           <input
             type="text"
             name="title"
@@ -61,15 +64,21 @@ function SaveExhibition() {
             value={formData.title}
             onChange={handleInput}
             required
+            placeholder="Enter an exhibition title"
+            maxLength={50}
           />
         </label>
         <label htmlFor="description">
+          Description:
+          <br />
           <textarea
             name="description"
             id="description"
             onChange={handleInput}
             value={formData.description}
-            required
+            placeholder="Enter an exhibition description"
+            maxLength={250}
+            rows={10}
           ></textarea>
         </label>
         <button type="submit">Save</button>
