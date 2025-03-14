@@ -1,14 +1,18 @@
 .header {
   background-color: var(--warm-yellow);
-  padding: 15px 15px 30px;
+  padding: 25px 15px;
+  border-bottom: 1px solid var(--text);
 }
 
 .header h1 {
   margin-top: 0;
+  border-top: 1px solid var(--text);
+  border-right: 1px solid var(--text);
+  border-bottom: 1px solid var(--text);
 }
 
 .header h1 a {
-  color: var(--white);
+  color: var(--text);
   text-decoration: none;
 }
 
