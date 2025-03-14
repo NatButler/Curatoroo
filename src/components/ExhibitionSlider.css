@@ -2,7 +2,7 @@
   .slider-container {
     width: 786px;
     height: auto;
-    border: 50px solid var(--mid-grey);
+    border: 50px solid var(--background);
     overflow-x: hidden;
     position: relative;
   }
@@ -66,5 +66,20 @@
     top: 0;
     bottom: 0;
     right: 0;
+  }
+
+  .slider-nav {
+    gap: 5px !important;
+  }
+
+  .slider-nav button {
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+
+  .slider-nav button.active {
+    color: var(--red);
+    font-weight: 600;
+    border-color: var(--text);
   }
 }

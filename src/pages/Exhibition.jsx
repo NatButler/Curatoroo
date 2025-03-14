@@ -27,16 +27,8 @@ function Exhibition() {
     );
   };
 
-  const sliderHandler = (dir) => {
-    if (dir === 'left' && currentPos > 0) {
-      setCurrentPos(currentPos - 1);
-    }
-    if (
-      dir === 'right' &&
-      currentPos < curate.currentExhibitionObjects.length - 1
-    ) {
-      setCurrentPos(currentPos + 1);
-    }
+  const handleSliderNav = (pos) => {
+    setCurrentPos(pos);
   };
 
   if (curate.status === statuses.LOADING) {
@@ -47,11 +39,17 @@ function Exhibition() {
     <>
       {exhibition && (
         <div>
-          <h3>{exhibition.title}</h3>
-          <p>{exhibition.description}</p>
+          <h3 className="mt-0 mb-0">Title: {exhibition.title}</h3>
+          <p className="mt-0">
+            <strong>Description:</strong> {exhibition.description}
+          </p>
           <div className="layout-row">
-            <div className="layout-column">
-              <ObjectCard object={curate.currentExhibitionObjects[currentPos]}>
+            <div className="layout-column _25">
+              <span>{currentPos + 1}.</span>
+              <ObjectCard
+                object={curate.currentExhibitionObjects[currentPos]}
+                dark
+              >
                 <button
                   type="button"
                   onClick={() =>
@@ -65,15 +63,34 @@ function Exhibition() {
                 </button>
               </ObjectCard>
             </div>
-            <div className="layout-column">
-              <ExhibitionSlider handler={sliderHandler} currentPos={currentPos}>
-                {curate.currentExhibitionObjects.length > 0 &&
-                  curate.currentExhibitionObjects.map((object) => (
-                    <li key={object.objectID}>
-                      <img src={object.primaryImageSmall} alt="" />
-                    </li>
-                  ))}
-              </ExhibitionSlider>
+            <div className="layout-column _75">
+              <div className="center">
+                <div className="slider-wrapper">
+                  <ExhibitionSlider
+                    setCurrentPos={setCurrentPos}
+                    currentPos={currentPos}
+                    sliderObjectsCount={curate.currentExhibitionObjects.length}
+                  >
+                    {curate.currentExhibitionObjects.length > 0 &&
+                      curate.currentExhibitionObjects.map((object) => (
+                        <li key={object.objectID}>
+                          <img src={object.primaryImageSmall} alt="" />
+                        </li>
+                      ))}
+                  </ExhibitionSlider>
+                  <ul className="reset slider-nav">
+                    {curate.currentExhibitionObjects.map((object, i) => (
+                      <li key={object.objectID}>
+                        <button
+                          type="button"
+                          onClick={() => handleSliderNav(i)}
+                          className={currentPos === i && 'active'}
+                        >{`${i + 1}`}</button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
