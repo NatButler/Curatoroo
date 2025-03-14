@@ -24,7 +24,7 @@ function Explore() {
   return (
     <>
       <form onSubmit={handleSubmit} className="search-bar">
-        <label htmlFor="search" className="hidden">
+        <label htmlFor="search" className="visually-hidden">
           Search:
         </label>
         <input

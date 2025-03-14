@@ -43,6 +43,7 @@ function Exhibition() {
                     <button
                       type="button"
                       onClick={() => handleRemoveObjectFromExhibition(object)}
+                      className="btn-action"
                     >
                       Remove from exhibition
                     </button>

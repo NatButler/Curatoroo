@@ -48,3 +48,20 @@ ul.reset {
   display: flex;
   gap: 15px;
 }
+
+.visually-hidden {
+  border-width: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+.btn-action {
+  padding: 5px 10px;
+  background-color: var(--white);
+  border-radius: 20px;
+}
