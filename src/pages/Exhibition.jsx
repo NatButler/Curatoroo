@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   removeObjectFromExhibition,
@@ -11,6 +11,7 @@ import ObjectCard from '../components/ObjectCard';
 import statuses from '../constants/ajaxStatus';
 import ExhibitionSlider from '../components/ExhibitionSlider';
 import Loader from '../components/Loader';
+import BackLink from '../components/BackLink';
 import ChevronLeftIcon from '../assets/chevron_left.svg?react';
 import ChevronRightIcon from '../assets/chevron_right.svg?react';
 import './Exhibition.css';
@@ -18,6 +19,7 @@ import './Exhibition.css';
 function Exhibition() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
   const exhibition = useSelector(selectExhibition);
   const curate = useSelector((state) => state.curate);
   const [currentPos, setCurrentPos] = useState(0);
@@ -30,6 +32,9 @@ function Exhibition() {
     dispatch(
       removeObjectFromExhibition({ exhibitionId: exhibition.id, object })
     );
+    if (exhibition.exhibits.length === 1) {
+      navigate('/curate');
+    }
   };
 
   const handleSliderNav = (pos) => {
@@ -60,6 +65,7 @@ function Exhibition() {
     <>
       {exhibition && (
         <div>
+          <BackLink />
           <h3 className="mt-0 mb-0">Title: {exhibition.title}</h3>
           <p className="mt-0">
             <strong>Description:</strong> {exhibition.description}

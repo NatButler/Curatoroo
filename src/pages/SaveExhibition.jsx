@@ -7,6 +7,7 @@ import {
   selectExhibition,
 } from '../store/curateSlice';
 import ExhibitionForm from '../components/ExhibitionForm';
+import BackLink from '../components/BackLink';
 import './SaveExhibition.css';
 
 const initFormState = {
@@ -20,7 +21,7 @@ function SaveExhibition() {
   const { id } = useParams();
   const exhibition = useSelector(selectExhibition);
   const [formData, setFormData] = useState(
-    exhibition
+    id
       ? { title: exhibition.title, description: exhibition.description }
       : initFormState
   );
@@ -49,7 +50,8 @@ function SaveExhibition() {
 
   return (
     <>
-      <h2 className="mt-0">Save exhibition</h2>
+      <BackLink />
+      <h2 className="mt-0">{id ? 'Save exhibition' : 'Add exhibition'}</h2>
       <ExhibitionForm
         formData={formData}
         handleInput={handleInput}
