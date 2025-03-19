@@ -5,7 +5,12 @@ function ExploreLandingPage({ searchResults }) {
     return <Navigate to="/explore/collection1" replace />;
   }
 
-  return <p>Use the search field above to explore all collections.</p>;
+  return (
+    <p>
+      Use the search field above to explore all collections; add items to
+      exhibitions.
+    </p>
+  );
 }
 
 export default ExploreLandingPage;
