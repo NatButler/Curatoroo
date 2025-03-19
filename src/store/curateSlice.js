@@ -95,7 +95,12 @@ export const curateSlice = createSlice({
       state.selectedExhibitionId = '';
     },
     setSelectedExhibitionId: (state, action) => {
-      state.selectedExhibitionId = action.payload.id;
+      if (action.payload.id) {
+        state.selectedExhibitionId = action.payload.id;
+      } else {
+        state.selectedExhibitionId = '';
+        state.currentExhibitionObjects = [];
+      }
     },
     setSelectedObject: (state, action) => {
       state.selectedObject = action.payload;
