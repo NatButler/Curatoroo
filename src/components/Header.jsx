@@ -10,10 +10,10 @@ function Header() {
       <nav>
         <ul className="reset">
           <li>
-            <NavLink to="/explore">Explore</NavLink>
+            <NavLink to="/explore">Explore & curate</NavLink>
           </li>
           <li>
-            <NavLink to="/curate">Curate</NavLink>
+            <NavLink to="/curate">Exhibitions</NavLink>
           </li>
         </ul>
       </nav>
