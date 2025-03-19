@@ -31,7 +31,7 @@ function ExhibitionsModal({ isOpen, onClose }) {
           </li>
         ))}
       </ul>
-      <p className="warning">
+      <p className="info">
         If an exhibition isn't displayed above, it already contains the object
         you're adding.
       </p>

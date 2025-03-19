@@ -80,6 +80,12 @@ ul.reset {
   border-radius: 20px;
 }
 
+.info {
+  border: 1px solid var(--warm-yellow);
+  background-color: var(--pale-yellow);
+  padding: 5px 10px;
+}
+
 /* Layout */
 .layout-container {
   max-width: 1400px;

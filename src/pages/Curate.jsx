@@ -26,6 +26,9 @@ function Curate() {
         </Link>
       </nav>
       <h3>Exhibitions</h3>
+      {!exhibitions.length && (
+        <p className="info">Add an exhibition using the link above.</p>
+      )}
       <ul className="exhibitions-list">
         {exhibitions.map((exhibition) => (
           <li key={exhibition.id}>
@@ -48,7 +51,7 @@ function Curate() {
             )}
             <p>{exhibition.description}</p>
             {exhibition.exhibits.length === 0 && (
-              <p className="warning">
+              <p className="info">
                 Add to your exhibition by navigating to the{' '}
                 <Link to="/explore">Explore & curate</Link> page
               </p>
