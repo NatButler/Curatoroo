@@ -52,7 +52,7 @@ function SaveExhibition() {
 
   return (
     <>
-      <h2>Save exhibition</h2>
+      <h2 className="mt-0">Save exhibition</h2>
       <form onSubmit={handleSubmit} className="save-exhibition-form">
         <label htmlFor="title">
           Title:
