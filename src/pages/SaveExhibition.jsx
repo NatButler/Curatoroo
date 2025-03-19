@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addExhibition,
   editExhibition,
   selectExhibition,
-  setSelectedExhibitionId,
 } from '../store/curateSlice';
+import ExhibitionForm from '../components/ExhibitionForm';
 import './SaveExhibition.css';
 
 const initFormState = {
@@ -25,10 +25,6 @@ function SaveExhibition() {
       : initFormState
   );
 
-  useEffect(() => {
-    dispatch(setSelectedExhibitionId({ id, load: false }));
-  }, [dispatch, id]);
-
   const handleInput = (ev) => {
     setFormData({
       ...formData,
@@ -40,10 +36,11 @@ function SaveExhibition() {
     ev.preventDefault();
     if (id) {
       dispatch(editExhibition(formData));
+      navigate('/curate');
     } else {
       dispatch(addExhibition(formData));
+      navigate(-1);
     }
-    navigate('/curate');
   };
 
   if (id && !exhibition) {
@@ -53,36 +50,11 @@ function SaveExhibition() {
   return (
     <>
       <h2 className="mt-0">Save exhibition</h2>
-      <form onSubmit={handleSubmit} className="save-exhibition-form">
-        <label htmlFor="title">
-          Title:
-          <br />
-          <input
-            type="text"
-            name="title"
-            id="title"
-            value={formData.title}
-            onChange={handleInput}
-            required
-            placeholder="Enter an exhibition title"
-            maxLength={50}
-          />
-        </label>
-        <label htmlFor="description">
-          Description:
-          <br />
-          <textarea
-            name="description"
-            id="description"
-            onChange={handleInput}
-            value={formData.description}
-            placeholder="Enter an exhibition description"
-            maxLength={250}
-            rows={10}
-          ></textarea>
-        </label>
-        <button type="submit">Save</button>
-      </form>
+      <ExhibitionForm
+        formData={formData}
+        handleInput={handleInput}
+        handleSubmit={handleSubmit}
+      />
     </>
   );
 }
