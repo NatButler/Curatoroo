@@ -6,9 +6,14 @@ import {
   selectExhibition,
   setSelectedExhibitionId,
 } from '../store/curateSlice';
+import ErrorPage from './ErrorPage';
 import ObjectCard from '../components/ObjectCard';
 import statuses from '../constants/ajaxStatus';
 import ExhibitionSlider from '../components/ExhibitionSlider';
+import Loader from '../components/Loader';
+import ChevronLeftIcon from '../assets/chevron_left.svg?react';
+import ChevronRightIcon from '../assets/chevron_right.svg?react';
+import './Exhibition.css';
 
 function Exhibition() {
   const dispatch = useDispatch();
@@ -31,8 +36,24 @@ function Exhibition() {
     setCurrentPos(pos);
   };
 
+  const handleSliderControls = (dir) => {
+    if (dir === 'prev' && currentPos > 0) {
+      setCurrentPos(currentPos - 1);
+    }
+    if (
+      dir === 'next' &&
+      currentPos < curate.currentExhibitionObjects.length - 1
+    ) {
+      setCurrentPos(currentPos + 1);
+    }
+  };
+
   if (curate.status === statuses.LOADING) {
-    return <p>Loading...</p>;
+    return <Loader />;
+  }
+
+  if (curate.status === statuses.ERROR) {
+    return <ErrorPage />;
   }
 
   return (
@@ -45,7 +66,27 @@ function Exhibition() {
           </p>
           <div className="layout-row">
             <div className="layout-column _25">
-              <span>{currentPos + 1}.</span>
+              <nav className="object-card-nav">
+                <button
+                  type="button"
+                  onClick={() => handleSliderControls('prev')}
+                  disabled={!currentPos}
+                >
+                  <ChevronLeftIcon />
+                </button>
+                <span>
+                  {currentPos + 1} / {exhibition.exhibits.length}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleSliderControls('next')}
+                  disabled={
+                    currentPos === curate.currentExhibitionObjects.length - 1
+                  }
+                >
+                  <ChevronRightIcon />
+                </button>
+              </nav>
               <ObjectCard
                 object={curate.currentExhibitionObjects[currentPos]}
                 dark
@@ -67,12 +108,11 @@ function Exhibition() {
               <div className="center">
                 <div className="slider-wrapper">
                   <ExhibitionSlider
-                    setCurrentPos={setCurrentPos}
                     currentPos={currentPos}
-                    sliderObjectsCount={curate.currentExhibitionObjects.length}
+                    handleSliderControls={handleSliderControls}
                   >
                     {curate.currentExhibitionObjects.length > 0 &&
-                      curate.currentExhibitionObjects.map((object) => (
+                      curate.currentExhibitionObjects?.map((object) => (
                         <li key={object.objectID}>
                           <img src={object.primaryImageSmall} alt="" />
                         </li>
@@ -84,7 +124,7 @@ function Exhibition() {
                         <button
                           type="button"
                           onClick={() => handleSliderNav(i)}
-                          className={currentPos === i && 'active'}
+                          className={currentPos === i ? 'active' : undefined}
                         >{`${i + 1}`}</button>
                       </li>
                     ))}

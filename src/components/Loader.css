@@ -1,0 +1,7 @@
+.loader-text {
+  color: var(--text);
+}
+
+.loader-text_dark {
+  color: var(--white);
+}

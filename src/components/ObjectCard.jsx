@@ -3,8 +3,8 @@ import './ObjectCard.css';
 function ObjectCard({ object, children, dark = false }) {
   return (
     <div className={dark ? 'object-card dark' : 'object-card'}>
-      {object.primaryImageSmall ? (
-        <img src={object.primaryImageSmall} />
+      {object?.primaryImageSmall ? (
+        <img src={object?.primaryImageSmall} />
       ) : (
         <p>No image available</p>
       )}

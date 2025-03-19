@@ -1,0 +1,24 @@
+.object-card-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.object-card-nav button {
+  display: flex;
+}
+
+.object-card-nav button:disabled {
+  cursor: default;
+}
+
+.object-card-nav button:disabled > svg {
+  fill: var(--dark-grey);
+}
+
+@media screen and (min-width: 800px) {
+  .object-card-nav {
+    width: 250px;
+  }
+}

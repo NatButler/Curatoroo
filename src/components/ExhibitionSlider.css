@@ -1,10 +1,19 @@
+.slider-container {
+  display: none;
+}
+
+.slider-nav {
+  display: none !important;
+}
+
 @media screen and (min-width: 800px) {
   .slider-container {
     width: 786px;
     height: auto;
-    border: 50px solid var(--background);
+    border: 1px solid var(--text);
     overflow-x: hidden;
     position: relative;
+    display: block;
   }
 
   .slider-list {
@@ -28,6 +37,7 @@
   .slider-list li img {
     width: auto;
     height: 495px;
+    max-width: 786px;
   }
 
   .slider-container:hover > .exhibition-slider-control {
@@ -69,6 +79,7 @@
   }
 
   .slider-nav {
+    display: flex !important;
     gap: 5px !important;
   }
 

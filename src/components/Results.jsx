@@ -8,6 +8,7 @@ import Collapsible from './Collapsible';
 import ObjectCard from './ObjectCard';
 import ExhibitionsModal from './ExhiibitionsModal';
 import ResultsSlider from './ResultsSlider';
+import Loader from './Loader';
 import statuses from '../constants/ajaxStatus';
 import collectionNames from '../constants/collectionNames';
 import './Results.css';
@@ -59,74 +60,72 @@ function Results({ collection }) {
     setSelectedObject(null);
   };
 
-  if (status === statuses.LOADING) {
-    return (
-      <h3>
-        Loading results page {currentPage} of {results.pages} for &quot;
-        {searchTerm}
-        &quot; ({results.record_count})
-      </h3>
-    );
-  }
-
   return (
     <div>
       {results.pages > 0 && currentPageResults && (
         <>
           <h3>
-            Displaying results page {currentPage} of {results.pages} for &quot;
+            Displaying page {currentPage} of {results.pages} for &quot;
             {searchTerm}
-            &quot; ({results.record_count})
+            &quot; ({results.record_count} results)
           </h3>
-          {results?.pages > 1 && (
-            <PageNav
-              prevHandler={handlePrev}
-              nextHandler={handleNext}
-              startHandler={handleStart}
-              endHandler={handleEnd}
-              currentPage={currentPage}
-              pages={results.pages}
-            />
-          )}
-          {currentPageResults.rejectedCount > 0 && (
-            <p className="error">{`${currentPageResults.rejectedCount} results failed to load`}</p>
-          )}
-          {currentPageResults.notPublicDomain?.length > 0 && (
-            <Collapsible
-              label={`${currentPageResults.notPublicDomain.length} results are not in the public domain`}
-            >
-              <ul>
-                {currentPageResults.notPublicDomain.map((result) => (
-                  <li key={result.objectID}>
-                    {result.title} | {result.artistDisplayName}
-                  </li>
-                ))}
-              </ul>
-            </Collapsible>
+          {status === statuses.IDLE && (
+            <>
+              {currentPageResults.rejectedCount > 0 && (
+                <p className="error">{`${currentPageResults.rejectedCount} results failed to load`}</p>
+              )}
+              {currentPageResults.notPublicDomain?.length > 0 && (
+                <Collapsible
+                  label={`${currentPageResults.notPublicDomain.length} results are not in the public domain`}
+                >
+                  <ul>
+                    {currentPageResults.notPublicDomain.map((result) => (
+                      <li key={result.objectID}>
+                        {result.title} | {result.artistDisplayName}
+                      </li>
+                    ))}
+                  </ul>
+                </Collapsible>
+              )}
+            </>
           )}
           <ResultsSlider
+            key={
+              currentPageResults?.fulfilled
+                ? currentPageResults?.fulfilled[0]?.objectID
+                : undefined
+            }
             resultsLength={
               currentPageResults?.fulfilled?.length -
               currentPageResults?.notPublicDomain?.length -
               currentPageResults?.rejectedCount
             }
-            itemWidth={250}
+            itemWidth={265}
           >
-            <ul className="reset results-list">
-              {currentPageResults?.fulfilled?.map((object) => (
-                <li key={object.objectID}>
-                  <ObjectCard object={object}>
-                    <button
-                      type="button"
-                      onClick={() => handleOpenExhibitionModal(object)}
-                      className="btn-action"
-                    >
-                      Add to exhibition
-                    </button>
-                  </ObjectCard>
-                </li>
-              ))}
-            </ul>
+            {status === statuses.LOADING ? (
+              <Loader darkTheme />
+            ) : (
+              <>
+                {currentPageResults?.fulfilled?.length === 0 && (
+                  <p className="message">No results to display</p>
+                )}
+                <ul className="reset results-list">
+                  {currentPageResults?.fulfilled?.map((object) => (
+                    <li key={object.objectID}>
+                      <ObjectCard object={object}>
+                        <button
+                          type="button"
+                          onClick={() => handleOpenExhibitionModal(object)}
+                          className="btn-action"
+                        >
+                          Add to exhibition
+                        </button>
+                      </ObjectCard>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </ResultsSlider>
         </>
       )}

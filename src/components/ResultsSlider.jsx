@@ -16,7 +16,12 @@ function ResultsSlider({ resultsLength, children, itemWidth }) {
   };
 
   const handleScrollRight = () => {
-    if (sliderPos > -((resultsLength / 2) * itemWidth)) {
+    // if (sliderPos > -((resultsLength / 2) * itemWidth)) {
+    if (
+      sliderPos >
+      -favouritesSlider.current.scrollWidth +
+        favouritesSlider.current.offsetWidth
+    ) {
       const shift = sliderPos - itemWidth;
       favouritesSlider.current.style.transform = `translateX(${shift}px)`;
       setSliderPos(shift);
