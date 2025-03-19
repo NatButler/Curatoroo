@@ -70,8 +70,8 @@ function Explore() {
       {outlet || (
         <ExploreLandingPage
           searchResults={
-            collection1.currentPageResults.fulfilled?.length > 0 ||
-            collection2.currentPageResults.fulfilled?.length > 0
+            collection1.results.record_count > 0 ||
+            collection2.results.record_count > 0
           }
         />
       )}
