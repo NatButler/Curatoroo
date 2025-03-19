@@ -81,6 +81,11 @@ ul.reset {
 }
 
 /* Layout */
+.layout-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .layout-row {
   display: flex;
   flex-direction: row;
