@@ -23,7 +23,9 @@ export const searchMetCollection = createAsyncThunk(
     }
 
     const response = await searchCollection(searchTerm);
-    thunkAPI.dispatch(loadObjects(response[response.pageKeys[0]]));
+    if (response.record_count) {
+      thunkAPI.dispatch(loadObjects(response[response.pageKeys[0]]));
+    }
     return response;
   }
 );
@@ -50,7 +52,9 @@ export const metSlice = createSlice({
       state.status = statuses.ERROR;
     });
     builder.addCase(searchMetCollection.fulfilled, (state, action) => {
-      state.status = statuses.IDLE;
+      if (!action.payload.record_count) {
+        state.status = statuses.IDLE;
+      }
       state.results = action.payload;
     });
     builder.addCase(loadObjects.pending, (state) => {
