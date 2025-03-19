@@ -40,23 +40,31 @@ function Explore() {
       </form>
       <div>
         {collection1.status === statuses.SEARCHING ||
-          (collection2.status === statuses.LOADING && <p>Searching...</p>)}
-        {(collection1.currentPageResults.fulfilled?.length > 0 ||
-          collection2.currentPageResults.fulfilled?.length > 0) && (
-          <nav className="sub-nav">
-            <ul className="reset">
-              <NavLink to="/explore/collection1">
-                {collection1.results.record_count
-                  ? `Collection 1 (${collection1.results.record_count})`
-                  : 'Collection 1 returned 0 results'}
-              </NavLink>
-              <NavLink to="/explore/collection2">
-                {collection2.results.record_count
-                  ? `Collection 2 (${collection2.results.record_count})`
-                  : 'Collection 2 returned 0 results'}
-              </NavLink>
-            </ul>
-          </nav>
+        collection2.status === statuses.LOADING ? (
+          <p>Searching...</p>
+        ) : (
+          <>
+            {searchTerm && (
+              <nav className="sub-nav">
+                <ul className="reset">
+                  <li>
+                    <NavLink to="/explore/collection1">
+                      {collection1.results.record_count
+                        ? `Collection 1 (${collection1.results.record_count})`
+                        : 'Collection 1 (0 results)'}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/explore/collection2">
+                      {collection2.results.record_count
+                        ? `Collection 2 (${collection2.results.record_count})`
+                        : 'Collection 2 (0 results)'}
+                    </NavLink>
+                  </li>
+                </ul>
+              </nav>
+            )}
+          </>
         )}
       </div>
       {outlet || (
