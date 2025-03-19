@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { setCurrentPage as setMetCurrentPage } from '../store/metSlice';
 import { setCurrentPage as setVaCurrentPage } from '../store/vaSlice';
 import { setSelectedObject } from '../store/curateSlice';
@@ -59,6 +60,10 @@ function Results({ collection }) {
     setIsExhibitionModalOpen(false);
     setSelectedObject(null);
   };
+
+  if (!searchTerm) {
+    return <Navigate to="/explore" replace />;
+  }
 
   return (
     <div>
