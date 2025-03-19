@@ -31,10 +31,10 @@ function ExhibitionsModal({ isOpen, onClose }) {
           </li>
         ))}
       </ul>
-      <i>
+      <p className="warning">
         If an exhibition isn't displayed above, it already contains the object
         you're adding.
-      </i>
+      </p>
       <hr />
       <nav className="sub-nav">
         <Link to="/curate/save-exhibition" className="create-exhibition">
