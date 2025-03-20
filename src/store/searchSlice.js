@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   searchTerm: '',
+  artistOrMakerFlag: false,
 };
 
 export const searchSlice = createSlice({
@@ -10,11 +11,13 @@ export const searchSlice = createSlice({
   reducers: {
     setSearchTerm: (state, action) => {
       state.searchTerm = action.payload;
-      state.selectedResults = null;
+    },
+    setArtistOrMakerFlag: (state, action) => {
+      state.artistOrMakerFlag = action.payload;
     },
   },
 });
 
-export const { setSearchTerm } = searchSlice.actions;
+export const { setSearchTerm, setArtistOrMakerFlag } = searchSlice.actions;
 
 export default searchSlice.reducer;

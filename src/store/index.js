@@ -33,8 +33,10 @@ const localStorageMiddleware = createListenerMiddleware();
 searchMiddleware.startListening({
   actionCreator: setSearchTerm,
   effect: async (action, listenerApi) => {
-    listenerApi.dispatch(searchMetCollection({ searchTerm: action.payload }));
-    listenerApi.dispatch(searchVaCollection({ searchTerm: action.payload }));
+    const artistOrMakerFlag = listenerApi.getState().search.artistOrMakerFlag;
+    listenerApi.dispatch(
+      searchMetCollection({ searchTerm: action.payload, artistOrMakerFlag })
+    );
     listenerApi.dispatch(setVaCurrentPage(1));
   },
 });
@@ -52,9 +54,13 @@ metPageMiddleware.startListening({
 vaPageMiddleware.startListening({
   actionCreator: setVaCurrentPage,
   effect: async (action, listenerApi) => {
-    const { searchTerm } = listenerApi.getState().search;
+    const { searchTerm, artistOrMakerFlag } = listenerApi.getState().search;
     listenerApi.dispatch(
-      searchVaCollection({ searchTerm, page: action.payload })
+      searchVaCollection({
+        searchTerm,
+        page: action.payload,
+        artistOrMakerFlag,
+      })
     );
   },
 });

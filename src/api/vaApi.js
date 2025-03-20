@@ -1,8 +1,8 @@
 import { vaRecordObjectMap } from '../utils/helpers';
 import vaAgent from './vaAgent';
 
-export const searchCollection = async (q, page) => {
-  const response = await vaAgent.Search.query(q, page);
+export const searchCollection = async (q, page, maker) => {
+  const response = await vaAgent.Search.query(q, page, maker);
   return response;
 };
 

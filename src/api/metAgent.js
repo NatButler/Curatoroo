@@ -13,10 +13,11 @@ const requests = {
 };
 
 const Search = {
-  query: (q) =>
+  query: (q, artistOrCulture = false) =>
     requests.get(`/search`, {
       params: {
         hasImages: true,
+        artistOrCulture,
         q,
       },
     }),

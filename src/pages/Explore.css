@@ -10,6 +10,11 @@
   flex: 1;
 }
 
+.search-bar select {
+  padding: 0 5px;
+  border-width: 2px;
+}
+
 .search-bar button {
   padding: 5px 15px;
   background-color: var(--green);

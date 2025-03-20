@@ -14,12 +14,17 @@ const initialState = {
 
 export const searchVaCollection = createAsyncThunk(
   'va/searchVaCollection',
-  async ({ searchTerm, page = 1 }) => {
+  async ({ searchTerm, page = 1, artistOrMakerFlag }) => {
     if (!searchTerm) {
       return;
     }
 
-    const response = await searchCollection(searchTerm, page);
+    let response;
+    if (artistOrMakerFlag) {
+      response = await searchCollection(undefined, page, searchTerm);
+    } else {
+      response = await searchCollection(searchTerm, page);
+    }
     return response;
   }
 );

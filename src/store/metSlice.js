@@ -17,12 +17,12 @@ const initialState = {
 
 export const searchMetCollection = createAsyncThunk(
   'met/searchMetCollection',
-  async ({ searchTerm }, thunkAPI) => {
+  async ({ searchTerm, artistOrMakerFlag }, thunkAPI) => {
     if (!searchTerm) {
       return;
     }
 
-    const response = await searchCollection(searchTerm);
+    const response = await searchCollection(searchTerm, artistOrMakerFlag);
     if (response.record_count) {
       thunkAPI.dispatch(loadObjects(response[response.pageKeys[0]]));
     }

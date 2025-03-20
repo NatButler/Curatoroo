@@ -1,8 +1,8 @@
 import metAgent from './metAgent';
 import { metObjectMap, paginate } from '../utils/helpers';
 
-export const searchCollection = async (q) => {
-  const response = await metAgent.Search.query(q);
+export const searchCollection = async (q, artistOrMakerFlag) => {
+  const response = await metAgent.Search.query(q, artistOrMakerFlag);
   return paginate(response.data.objectIDs, 10);
 };
 
