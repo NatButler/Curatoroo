@@ -9,10 +9,10 @@ function ObjectCard({ object, children, dark = false }) {
         <p>No image available</p>
       )}
       <p>
-        {object.title} | {object.artistDisplayName}
+        {object?.title} | {object?.artistDisplayName}
       </p>
-      <p>{object.objectDate}</p>
-      <p>{object.medium}</p>
+      <p>{object?.objectDate}</p>
+      <p>{object?.medium}</p>
       {children}
       <hr />
     </div>

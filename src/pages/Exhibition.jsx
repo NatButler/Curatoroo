@@ -32,8 +32,14 @@ function Exhibition() {
     dispatch(
       removeObjectFromExhibition({ exhibitionId: exhibition.id, object })
     );
+
     if (exhibition.exhibits.length === 1) {
       navigate('/curate');
+    }
+
+    // If removing last item from array, set currentPos to previous item
+    if (currentPos === exhibition.exhibits.length - 1) {
+      setCurrentPos(currentPos - 1);
     }
   };
 
