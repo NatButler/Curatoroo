@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import BackArrowIcon from '../assets/arrow_back.svg?react';
 import './BackLink.css';
 
 function BackLink() {
@@ -6,6 +7,7 @@ function BackLink() {
 
   return (
     <button type="button" className="back-link" onClick={() => navigate(-1)}>
+      <BackArrowIcon />
       Back
     </button>
   );

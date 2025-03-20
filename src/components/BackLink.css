@@ -2,13 +2,13 @@
   background-color: transparent;
   border: none;
   font-size: 16px;
+  padding-left: 0;
 }
 
 .back-link:hover {
   text-decoration: underline;
 }
 
-.back-link::before {
-  content: '<-';
+.back-link > svg {
   margin-right: 5px;
 }
