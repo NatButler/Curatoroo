@@ -13,7 +13,7 @@
 }
 
 .exhibitions-list li {
-  border: 2px solid var(--text);
+  border: 2px solid var(--dark-grey);
   padding: 15px;
 }
 
