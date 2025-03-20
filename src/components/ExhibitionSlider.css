@@ -80,12 +80,13 @@
 
   .slider-nav {
     display: flex !important;
-    gap: 5px !important;
+    gap: 2px !important;
   }
 
   .slider-nav button {
     border: 1px solid transparent;
     border-radius: 4px;
+    background-color: transparent;
   }
 
   .slider-nav button.active {
