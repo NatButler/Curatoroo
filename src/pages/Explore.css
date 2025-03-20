@@ -2,6 +2,7 @@
   margin-bottom: 20px;
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .search-bar input {
@@ -21,6 +22,7 @@
   border: none;
   color: var(--white);
   font-weight: 700;
+  flex: 1;
 }
 
 .sub-nav {
@@ -43,5 +45,9 @@
 @media screen and (min-width: 800px) {
   .sub-nav {
     justify-content: space-around;
+  }
+
+  .search-bar button {
+    flex: 0;
   }
 }

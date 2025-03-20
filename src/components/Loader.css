@@ -1,7 +1,25 @@
 .loader-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-weight: 700;
+  font-size: 40px;
+  opacity: 0.5;
   color: var(--text);
+  flex: 1;
 }
 
 .loader-text_dark {
   color: var(--white);
+}
+
+.loader-text .elipses {
+  animation: flash 0.7s linear infinite;
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
 }

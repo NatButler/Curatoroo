@@ -3,6 +3,7 @@ import { NavLink, useOutlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setArtistOrMakerFlag, setSearchTerm } from '../store/searchSlice';
 import ExploreLandingPage from './ExploreLandingPage';
+import Loader from '../components/Loader';
 import statuses from '../constants/ajaxStatus';
 import './Explore.css';
 
@@ -73,7 +74,7 @@ function Explore() {
       <div>
         {collection1.status === statuses.SEARCHING ||
         collection2.status === statuses.LOADING ? (
-          <p>Searching...</p>
+          <Loader msg="Searching.." />
         ) : (
           <>
             {searchTerm && (
