@@ -7,7 +7,7 @@ function ExploreLandingPage({ searchResults }) {
 
   return (
     <p className="instructions">
-      Use the search field above to explore all collections; add items to
+      Use the search field above to explore all collections and add items to
       exhibitions.
     </p>
   );
