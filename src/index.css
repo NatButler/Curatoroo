@@ -49,6 +49,14 @@ button {
   margin-bottom: 0;
 }
 
+.mb-15 {
+  margin-bottom: 15px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
 .center {
   display: flex;
   justify-content: center;
@@ -77,6 +85,7 @@ ul.reset {
 .btn-action {
   padding: 5px 10px;
   background-color: var(--white);
+  border-color: var(--text);
   border-radius: 20px;
 }
 
@@ -84,6 +93,7 @@ ul.reset {
   border: 1px solid var(--warm-yellow);
   background-color: var(--pale-yellow);
   padding: 5px 10px;
+  margin-bottom: 15px;
 }
 
 .instructions {

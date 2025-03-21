@@ -27,8 +27,11 @@
 
 .sub-nav {
   display: flex;
-  justify-content: center;
   margin-bottom: 15px;
+}
+
+.sub-nav.center {
+  justify-content: center;
 }
 
 .sub-nav a {
@@ -44,7 +47,7 @@
 }
 
 @media screen and (min-width: 800px) {
-  .sub-nav {
+  .sub-nav.center {
     justify-content: space-around;
   }
 

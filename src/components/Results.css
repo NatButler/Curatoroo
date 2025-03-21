@@ -2,6 +2,7 @@ p.error {
   background-color: var(--red);
   color: var(--white);
   padding: 5px 10px;
+  margin-bottom: 15px;
 }
 
 p.warning {

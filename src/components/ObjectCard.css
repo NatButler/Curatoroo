@@ -11,6 +11,10 @@
   color: var(--text);
 }
 
+.object-card .actions {
+  margin-top: 10px;
+}
+
 @media screen and (min-width: 800px) {
   .object-card {
     width: 250px;

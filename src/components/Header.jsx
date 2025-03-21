@@ -4,7 +4,7 @@ import './Header.css';
 function Header() {
   return (
     <header className="header">
-      <h1>
+      <h1 className="mb-20">
         <Link to="/">Explore & curate app</Link>
       </h1>
       <nav>

@@ -73,7 +73,7 @@ function Exhibition() {
         <div>
           <BackLink />
           <h3 className="mt-0 mb-0">Title: {exhibition.title}</h3>
-          <p className="mt-0">
+          <p className="mt-0 mb-15">
             <strong>Description:</strong> {exhibition.description}
           </p>
           <div className="layout-row">

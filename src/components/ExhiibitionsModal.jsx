@@ -18,7 +18,7 @@ function ExhibitionsModal({ isOpen, onClose }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h3>Select an exhibition to add to</h3>
+      <h3 className="mb-20">Select an exhibition to add to</h3>
       <ul className="reset modal-exhibition-list">
         {exhibitions.map((exhibition) => (
           <li key={exhibition.id}>

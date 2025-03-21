@@ -25,7 +25,7 @@ function Curate() {
           Create a new exhibition
         </Link>
       </nav>
-      <h3>Exhibitions</h3>
+      <h3 className="mb-15">Exhibitions</h3>
       {!exhibitions.length && (
         <p className="instructions">Add an exhibition using the link above.</p>
       )}
@@ -33,14 +33,14 @@ function Curate() {
         {exhibitions.map((exhibition) => (
           <li key={exhibition.id}>
             {exhibition.exhibits.length > 0 ? (
-              <Link to={`/curate/${exhibition.id}`}>
-                <h4>
+              <h4>
+                <Link to={`/curate/${exhibition.id}`}>
                   {exhibition.title}{' '}
                   <span className="exhibit-count">
                     ({exhibition.exhibits.length} exhibits)
                   </span>
-                </h4>
-              </Link>
+                </Link>
+              </h4>
             ) : (
               <h4>
                 {exhibition.title}{' '}

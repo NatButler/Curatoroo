@@ -13,7 +13,7 @@ function ObjectCard({ object, children, dark = false }) {
       </p>
       <p>{object?.objectDate}</p>
       <p>{object?.medium}</p>
-      {children}
+      <div className="actions">{children}</div>
       <hr />
     </div>
   );
