@@ -49,7 +49,7 @@ function Curate() {
                 </span>
               </h4>
             )}
-            <p>{exhibition.description}</p>
+            <p className="mb-15">{exhibition.description}</p>
             {exhibition.exhibits.length === 0 && (
               <p className="info">
                 Add to your exhibition by navigating to the{' '}
