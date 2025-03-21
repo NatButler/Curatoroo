@@ -22,7 +22,7 @@ function SaveExhibition() {
   const exhibition = useSelector(selectExhibition);
   const [formData, setFormData] = useState(
     id
-      ? { title: exhibition.title, description: exhibition.description }
+      ? { title: exhibition?.title, description: exhibition?.description }
       : initFormState
   );
 

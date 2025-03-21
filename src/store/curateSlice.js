@@ -1,77 +1,24 @@
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-} from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { loadResults } from '../api/metApi';
-import { loadResults as loadVaResults } from '../api/vaApi';
 import { filterExhibits } from '../utils/helpers';
-import statuses from '../constants/ajaxStatus';
-import collectionNames from '../constants/collectionNames';
 
 const initialState = {
   exhibitions: [],
   selectedExhibitionId: '',
-  currentExhibitionObjects: [],
   selectedObject: null,
-  status: statuses.IDLE,
-  error: null,
 };
-
-export const loadExhibition = createAsyncThunk(
-  'curate/loadExhibition',
-  async (id, thunkAPI) => {
-    if (!id) return;
-    const { exhibits } = thunkAPI
-      .getState()
-      .curate.exhibitions.find((exhibition) => exhibition.id === id);
-
-    try {
-      const metResponse = await loadResults(
-        exhibits
-          .filter((exhibit) => exhibit.collection === collectionNames.MET)
-          .map((exhibit) => exhibit.objectID)
-      );
-      const vaResponse = await loadVaResults(
-        exhibits
-          .filter((exhibit) => exhibit.collection === collectionNames.VA)
-          .map((exhibit) => exhibit.objectID)
-      );
-
-      const results = exhibits.map((exhibit) => {
-        if (
-          metResponse.fulfilled.some(
-            (object) => object.objectID === exhibit.objectID
-          )
-        ) {
-          return metResponse.fulfilled.find(
-            (object) => object.objectID === exhibit.objectID
-          );
-        }
-        if (
-          vaResponse.fulfilled.some(
-            (object) => object.objectID === exhibit.objectID
-          )
-        ) {
-          return vaResponse.fulfilled.find(
-            (object) => object.objectID === exhibit.objectID
-          );
-        }
-        throw new Error('API error');
-      });
-
-      return results;
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.message);
-    }
-  }
-);
 
 export const curateSlice = createSlice({
   name: 'curate',
   initialState,
   reducers: {
+    setSelectedExhibitionId: (state, action) => {
+      if (action.payload.id) {
+        state.selectedExhibitionId = action.payload.id;
+      } else {
+        state.selectedExhibitionId = '';
+      }
+    },
     addExhibition: (state, action) => {
       if (state.selectedObject) {
         state.exhibitions = [
@@ -114,14 +61,6 @@ export const curateSlice = createSlice({
       );
       state.selectedExhibitionId = '';
     },
-    setSelectedExhibitionId: (state, action) => {
-      if (action.payload.id) {
-        state.selectedExhibitionId = action.payload.id;
-      } else {
-        state.selectedExhibitionId = '';
-        state.currentExhibitionObjects = [];
-      }
-    },
     setSelectedObject: (state, action) => {
       state.selectedObject = action.payload;
     },
@@ -146,33 +85,15 @@ export const curateSlice = createSlice({
       );
 
       exhibition.exhibits = filterExhibits(exhibition.exhibits, action);
-      state.currentExhibitionObjects = filterExhibits(
-        state.currentExhibitionObjects,
-        action
-      );
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(loadExhibition.pending, (state) => {
-      state.status = statuses.LOADING;
-      state.error = null;
-    });
-    builder.addCase(loadExhibition.rejected, (state, action) => {
-      state.status = statuses.ERROR;
-      state.error = { message: action.payload };
-    });
-    builder.addCase(loadExhibition.fulfilled, (state, action) => {
-      state.status = statuses.IDLE;
-      state.currentExhibitionObjects = action.payload;
-    });
   },
 });
 
 export const {
+  setSelectedExhibitionId,
   addExhibition,
   editExhibition,
   deleteExhibition,
-  setSelectedExhibitionId,
   addObjectToExhibition,
   setSelectedObject,
   removeObjectFromExhibition,
@@ -181,14 +102,7 @@ export const {
 export default curateSlice.reducer;
 
 // Selectors
-const selectExhibitions = (state) => state.curate.exhibitions;
-const selectSelectedExhibitionId = (state) => state.curate.selectedExhibitionId;
-export const selectExhibition = createSelector(
-  [selectExhibitions, selectSelectedExhibitionId],
-  (exhibitions, selectedId) => {
-    return exhibitions.find((exhibition) => exhibition.id === selectedId);
-  }
-);
+export const selectExhibitions = (state) => state.curate.exhibitions;
 const selectSelectedObject = (state) => state.curate.selectedObject;
 export const selectExhibitionsToAddObject = createSelector(
   [selectExhibitions, selectSelectedObject],
@@ -201,5 +115,13 @@ export const selectExhibitionsToAddObject = createSelector(
             exhibit.collection === selectedObject?.collection
         )
     );
+  }
+);
+
+const selectSelectedExhibitionId = (state) => state.curate.selectedExhibitionId;
+export const selectExhibition = createSelector(
+  [selectExhibitions, selectSelectedExhibitionId],
+  (exhibitions, selectedId) => {
+    return exhibitions.find((exhibition) => exhibition.id === selectedId);
   }
 );

@@ -6,6 +6,7 @@ import {
   selectExhibition,
   setSelectedExhibitionId,
 } from '../store/curateSlice';
+import { removeFromCurrentExhibitionObjects } from '../store/exhibitionSlice';
 import ErrorPage from './ErrorPage';
 import ObjectCard from '../components/ObjectCard';
 import statuses from '../constants/ajaxStatus';
@@ -21,7 +22,7 @@ function Exhibition() {
   const { id } = useParams();
   const navigate = useNavigate();
   const exhibition = useSelector(selectExhibition);
-  const curate = useSelector((state) => state.curate);
+  const currentExhibition = useSelector((state) => state.exhibition);
   const [currentPos, setCurrentPos] = useState(0);
 
   useEffect(() => {
@@ -31,6 +32,12 @@ function Exhibition() {
   const handleRemoveObjectFromExhibition = (object) => {
     dispatch(
       removeObjectFromExhibition({ exhibitionId: exhibition.id, object })
+    );
+    dispatch(
+      removeFromCurrentExhibitionObjects({
+        exhibitionId: exhibition.id,
+        object,
+      })
     );
 
     if (exhibition.exhibits.length === 1) {
@@ -53,17 +60,17 @@ function Exhibition() {
     }
     if (
       dir === 'next' &&
-      currentPos < curate.currentExhibitionObjects.length - 1
+      currentPos < currentExhibition.currentExhibitionObjects.length - 1
     ) {
       setCurrentPos(currentPos + 1);
     }
   };
 
-  if (curate.status === statuses.LOADING) {
+  if (currentExhibition.status === statuses.LOADING) {
     return <Loader />;
   }
 
-  if (curate.status === statuses.ERROR) {
+  if (currentExhibition.status === statuses.ERROR) {
     return <ErrorPage />;
   }
 
@@ -93,21 +100,22 @@ function Exhibition() {
                   type="button"
                   onClick={() => handleSliderControls('next')}
                   disabled={
-                    currentPos === curate.currentExhibitionObjects.length - 1
+                    currentPos ===
+                    currentExhibition.currentExhibitionObjects.length - 1
                   }
                 >
                   <ChevronRightIcon />
                 </button>
               </nav>
               <ObjectCard
-                object={curate.currentExhibitionObjects[currentPos]}
+                object={currentExhibition.currentExhibitionObjects[currentPos]}
                 dark
               >
                 <button
                   type="button"
                   onClick={() =>
                     handleRemoveObjectFromExhibition(
-                      curate.currentExhibitionObjects[currentPos]
+                      currentExhibition.currentExhibitionObjects[currentPos]
                     )
                   }
                   className="btn-action"
@@ -123,26 +131,30 @@ function Exhibition() {
                     currentPos={currentPos}
                     handleSliderControls={handleSliderControls}
                   >
-                    {curate.currentExhibitionObjects.length > 0 &&
-                      curate.currentExhibitionObjects?.map((object) => (
-                        <li key={object.objectID}>
-                          <img
-                            src={object.primaryImageSmall}
-                            alt={`Image of ${object.title}`}
-                          />
-                        </li>
-                      ))}
+                    {currentExhibition.currentExhibitionObjects.length > 0 &&
+                      currentExhibition.currentExhibitionObjects?.map(
+                        (object) => (
+                          <li key={object.objectID}>
+                            <img
+                              src={object.primaryImageSmall}
+                              alt={`Image of ${object.title}`}
+                            />
+                          </li>
+                        )
+                      )}
                   </ExhibitionSlider>
                   <ul className="reset slider-nav">
-                    {curate.currentExhibitionObjects.map((object, i) => (
-                      <li key={object.objectID}>
-                        <button
-                          type="button"
-                          onClick={() => handleSliderNav(i)}
-                          className={currentPos === i ? 'active' : undefined}
-                        >{`${i + 1}`}</button>
-                      </li>
-                    ))}
+                    {currentExhibition.currentExhibitionObjects.map(
+                      (object, i) => (
+                        <li key={object.objectID}>
+                          <button
+                            type="button"
+                            onClick={() => handleSliderNav(i)}
+                            className={currentPos === i ? 'active' : undefined}
+                          >{`${i + 1}`}</button>
+                        </li>
+                      )
+                    )}
                   </ul>
                 </div>
               </div>

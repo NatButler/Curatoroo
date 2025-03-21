@@ -18,11 +18,10 @@ import curateReducer, {
   addObjectToExhibition,
   deleteExhibition,
   editExhibition,
-  loadExhibition,
   removeObjectFromExhibition,
   setSelectedExhibitionId,
 } from './curateSlice';
-import statuses from '../constants/ajaxStatus';
+import exhibitionReducer, { loadExhibition } from './exhibitionSlice';
 
 const searchMiddleware = createListenerMiddleware();
 const metPageMiddleware = createListenerMiddleware();
@@ -101,16 +100,14 @@ export const store = configureStore({
   reducer: {
     search: searchReducer,
     curate: curateReducer,
+    exhibition: exhibitionReducer,
     met: metReducer,
     va: vaReducer,
   },
   preloadedState: {
     curate: {
       exhibitions: reHydrateExhibitions(),
-      selectedExhibitionId: '',
-      currentExhibitionObjects: [],
       selectedObject: null,
-      status: statuses.IDLE,
     },
   },
   middleware: (getDefaultMiddleware) =>
