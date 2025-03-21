@@ -14,8 +14,9 @@ const initialState = {
   exhibitions: [],
   selectedExhibitionId: '',
   currentExhibitionObjects: [],
-  selectedObject: {},
+  selectedObject: null,
   status: statuses.IDLE,
+  error: null,
 };
 
 export const loadExhibition = createAsyncThunk(
@@ -25,6 +26,7 @@ export const loadExhibition = createAsyncThunk(
     const { exhibits } = thunkAPI
       .getState()
       .curate.exhibitions.find((exhibition) => exhibition.id === id);
+
     try {
       const metResponse = await loadResults(
         exhibits
@@ -56,11 +58,12 @@ export const loadExhibition = createAsyncThunk(
             (object) => object.objectID === exhibit.objectID
           );
         }
+        throw new Error('API error');
       });
 
       return results;
     } catch (err) {
-      console.error(err);
+      return thunkAPI.rejectWithValue(err.message);
     }
   }
 );
@@ -70,14 +73,31 @@ export const curateSlice = createSlice({
   initialState,
   reducers: {
     addExhibition: (state, action) => {
-      state.exhibitions = [
-        ...state.exhibitions,
-        {
-          id: uuidv4(),
-          exhibits: [],
-          ...action.payload,
-        },
-      ];
+      if (state.selectedObject) {
+        state.exhibitions = [
+          ...state.exhibitions,
+          {
+            id: uuidv4(),
+            exhibits: [
+              {
+                objectID: state.selectedObject.objectID,
+                collection: state.selectedObject.collection,
+              },
+            ],
+            ...action.payload,
+          },
+        ];
+        state.selectedObject = null;
+      } else {
+        state.exhibitions = [
+          ...state.exhibitions,
+          {
+            id: uuidv4(),
+            exhibits: [],
+            ...action.payload,
+          },
+        ];
+      }
     },
     editExhibition: (state, action) => {
       const exhibition = state.exhibitions.find(
@@ -118,7 +138,7 @@ export const curateSlice = createSlice({
         },
       ];
 
-      state.selectedObject = {};
+      state.selectedObject = null;
     },
     removeObjectFromExhibition: (state, action) => {
       const exhibition = state.exhibitions.find(
@@ -135,9 +155,11 @@ export const curateSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(loadExhibition.pending, (state) => {
       state.status = statuses.LOADING;
+      state.error = null;
     });
-    builder.addCase(loadExhibition.rejected, (state) => {
+    builder.addCase(loadExhibition.rejected, (state, action) => {
       state.status = statuses.ERROR;
+      state.error = { message: action.payload };
     });
     builder.addCase(loadExhibition.fulfilled, (state, action) => {
       state.status = statuses.IDLE;
@@ -175,8 +197,8 @@ export const selectExhibitionsToAddObject = createSelector(
       (exhibition) =>
         !exhibition.exhibits.some(
           (exhibit) =>
-            exhibit.objectID === selectedObject.objectID &&
-            exhibit.collection === selectedObject.collection
+            exhibit.objectID === selectedObject?.objectID &&
+            exhibit.collection === selectedObject?.collection
         )
     );
   }

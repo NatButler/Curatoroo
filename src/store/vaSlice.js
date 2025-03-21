@@ -10,6 +10,7 @@ const initialState = {
   currentPage: 1,
   status: statuses.IDLE,
   collectionName: collectionNames.VA,
+  error: null,
 };
 
 export const searchVaCollection = createAsyncThunk(
@@ -40,9 +41,11 @@ export const vaSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(searchVaCollection.pending, (state) => {
       state.status = statuses.LOADING;
+      state.error = null;
     });
-    builder.addCase(searchVaCollection.rejected, (state) => {
+    builder.addCase(searchVaCollection.rejected, (state, action) => {
       state.status = statuses.ERROR;
+      state.error = action.error;
     });
     builder.addCase(searchVaCollection.fulfilled, (state, action) => {
       state.status = statuses.IDLE;

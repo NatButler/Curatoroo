@@ -13,6 +13,7 @@ const initialState = {
   currentPageResults: {},
   status: statuses.IDLE,
   collectionName: collectionNames.MET,
+  error: null,
 };
 
 export const searchMetCollection = createAsyncThunk(
@@ -48,8 +49,9 @@ export const metSlice = createSlice({
       ...initialState,
       status: statuses.SEARCHING,
     }));
-    builder.addCase(searchMetCollection.rejected, (state) => {
+    builder.addCase(searchMetCollection.rejected, (state, action) => {
       state.status = statuses.ERROR;
+      state.error = action.error;
     });
     builder.addCase(searchMetCollection.fulfilled, (state, action) => {
       if (!action.payload.record_count) {

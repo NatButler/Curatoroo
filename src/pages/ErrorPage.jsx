@@ -1,8 +1,10 @@
-function ErrorPage() {
+function ErrorPage({ error }) {
   return (
     <>
-      <h2>Error</h2>
-      <p>There was an error! Please try again shortly.</p>
+      <h2>{error?.message}</h2>
+      <p className="error">
+        There was an error with an API request. Please try again shortly.
+      </p>
     </>
   );
 }

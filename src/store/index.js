@@ -94,6 +94,7 @@ const reHydrateExhibitions = () => {
   if (localStorage.getItem('exhibitions') !== null) {
     return JSON.parse(localStorage.getItem('exhibitions'));
   }
+  return [];
 };
 
 export const store = configureStore({
@@ -108,7 +109,7 @@ export const store = configureStore({
       exhibitions: reHydrateExhibitions(),
       selectedExhibitionId: '',
       currentExhibitionObjects: [],
-      selectedObject: {},
+      selectedObject: null,
       status: statuses.IDLE,
     },
   },

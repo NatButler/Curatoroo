@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setArtistOrMakerFlag, setSearchTerm } from '../store/searchSlice';
 import ExploreLandingPage from './ExploreLandingPage';
 import Loader from '../components/Loader';
+import ErrorPage from './ErrorPage';
 import statuses from '../constants/ajaxStatus';
 import './Explore.css';
 
@@ -72,30 +73,37 @@ function Explore() {
         <button type="submit">Search</button>
       </form>
       <div>
-        {collection1.status === statuses.SEARCHING ||
-        collection2.status === statuses.LOADING ? (
-          <Loader msg="Searching.." />
+        {collection1.status === statuses.ERROR ||
+        collection2.status === statuses.ERROR ? (
+          <ErrorPage error={collection1.error || collection2.error} />
         ) : (
           <>
-            {searchTerm && (
-              <nav className="sub-nav">
-                <ul className="reset">
-                  <li>
-                    <NavLink to="/explore/collection1">
-                      {collection1.results.record_count
-                        ? `Collection 1 (${collection1.results.record_count})`
-                        : 'Collection 1 (0 results)'}
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/explore/collection2">
-                      {collection2.results.record_count
-                        ? `Collection 2 (${collection2.results.record_count})`
-                        : 'Collection 2 (0 results)'}
-                    </NavLink>
-                  </li>
-                </ul>
-              </nav>
+            {collection1.status === statuses.SEARCHING ||
+            collection2.status === statuses.LOADING ? (
+              <Loader msg="Searching.." />
+            ) : (
+              <>
+                {searchTerm && (
+                  <nav className="sub-nav center">
+                    <ul className="reset">
+                      <li>
+                        <NavLink to="/explore/collection1">
+                          {collection1.results.record_count
+                            ? `Collection 1 (${collection1.results.record_count})`
+                            : 'Collection 1 (0 results)'}
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink to="/explore/collection2">
+                          {collection2.results.record_count
+                            ? `Collection 2 (${collection2.results.record_count})`
+                            : 'Collection 2 (0 results)'}
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </nav>
+                )}
+              </>
             )}
           </>
         )}

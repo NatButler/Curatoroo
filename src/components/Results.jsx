@@ -65,11 +65,21 @@ function Results({ collection }) {
     return <Navigate to="/explore" replace />;
   }
 
+  if (status === statuses.ERROR) {
+    return null;
+  }
+
+  if (status === statuses.IDLE && results.record_count === 0) {
+    return (
+      <p className="warning">No search results found for "{searchTerm}"</p>
+    );
+  }
+
   return (
     <div>
       {results.pages > 0 && currentPageResults && (
         <>
-          <h3>
+          <h3 className="mb-15">
             Displaying page {currentPage} of {results.pages} for &quot;
             {searchTerm}
             &quot; ({results.record_count} results)
