@@ -126,7 +126,10 @@ function Exhibition() {
                     {curate.currentExhibitionObjects.length > 0 &&
                       curate.currentExhibitionObjects?.map((object) => (
                         <li key={object.objectID}>
-                          <img src={object.primaryImageSmall} alt="" />
+                          <img
+                            src={object.primaryImageSmall}
+                            alt={`Image of ${object.title}`}
+                          />
                         </li>
                       ))}
                   </ExhibitionSlider>
