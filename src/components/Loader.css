@@ -8,6 +8,7 @@
   opacity: 0.5;
   color: var(--text);
   flex: 1;
+  margin: 40px 0;
 }
 
 .loader-text_dark {

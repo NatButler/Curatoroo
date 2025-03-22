@@ -46,7 +46,7 @@ button {
 }
 
 .mb-0 {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .mb-15 {
