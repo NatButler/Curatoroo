@@ -41,7 +41,7 @@ function Exhibition() {
     );
 
     if (exhibition.exhibits.length === 1) {
-      navigate('/curate');
+      navigate('/exhibitions');
     }
 
     // If removing last item from array, set currentPos to previous item
@@ -90,6 +90,7 @@ function Exhibition() {
                   type="button"
                   onClick={() => handleSliderControls('prev')}
                   disabled={!currentPos}
+                  aria-label="Previous object"
                 >
                   <ChevronLeftIcon />
                 </button>
@@ -103,6 +104,7 @@ function Exhibition() {
                     currentPos ===
                     currentExhibition.currentExhibitionObjects.length - 1
                   }
+                  aria-label="Next object"
                 >
                   <ChevronRightIcon />
                 </button>

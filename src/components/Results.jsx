@@ -105,11 +105,7 @@ function Results({ collection }) {
             </>
           )}
           <ResultsSlider
-            key={
-              currentPageResults?.fulfilled
-                ? currentPageResults?.fulfilled[0]?.objectID
-                : undefined
-            }
+            key={status}
             resultsLength={
               currentPageResults?.fulfilled?.length -
               currentPageResults?.notPublicDomain?.length -

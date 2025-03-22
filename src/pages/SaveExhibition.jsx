@@ -37,7 +37,7 @@ function SaveExhibition() {
     ev.preventDefault();
     if (id) {
       dispatch(editExhibition(formData));
-      navigate('/curate');
+      navigate('/exhibitions');
     } else {
       dispatch(addExhibition(formData));
       navigate(-1);

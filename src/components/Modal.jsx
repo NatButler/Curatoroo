@@ -42,6 +42,8 @@ function Modal({ isOpen, hasCloseBtn = true, onClose, children }) {
           type="button"
           className="modal-close-btn"
           onClick={handleCloseModal}
+          title="Close"
+          aria-label="Close modal"
         >
           <Close />
         </button>

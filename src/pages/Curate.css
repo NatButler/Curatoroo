@@ -15,6 +15,12 @@
 .exhibitions-list li {
   border: 2px solid var(--dark-grey);
   padding: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+.exhibitions-list li .exhibition-content {
+  flex: 1;
 }
 
 .exhibitions-list li a:hover {
@@ -36,12 +42,24 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.exhibitions-list li .actions button {
+.exhibitions-list li .actions .edit-link {
+  border: 1px solid var(--text);
+  padding: 3px 5px 0;
+}
+
+.exhibitions-list li .actions .edit-link svg {
+  fill: var(--text);
+}
+
+.exhibitions-list li .actions .delete-button {
   background-color: var(--red);
   border: none;
   color: var(--white);
+  padding: 5px 7px 3px;
 }
 
 @media screen and (min-width: 800px) {

@@ -31,12 +31,12 @@ function App() {
                 element={<Collection2 />}
               ></Route>
             </Route>
-            <Route path="/curate" element={<Curate />}></Route>
+            <Route path="/exhibitions" element={<Curate />}></Route>
             <Route
-              path="/curate/save-exhibition/:id?"
+              path="/exhibitions/save-exhibition/:id?"
               element={<SaveExhibition />}
             ></Route>
-            <Route path="/curate/:id" element={<Exhibition />}></Route>
+            <Route path="/exhibitions/:id" element={<Exhibition />}></Route>
           </Routes>
         </main>
       </div>

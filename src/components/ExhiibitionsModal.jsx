@@ -18,7 +18,7 @@ function ExhibitionsModal({ isOpen, onClose }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h3 className="mb-20">Select an exhibition to add to</h3>
+      <h3 className="mb-20 mt-0">Select an exhibition to add to</h3>
       <ul className="reset modal-exhibition-list">
         {exhibitions.map((exhibition) => (
           <li key={exhibition.id}>
@@ -35,9 +35,9 @@ function ExhibitionsModal({ isOpen, onClose }) {
         If an exhibition isn't displayed above, it already contains the object
         you're adding.
       </p>
-      <hr />
+      <hr className="mb-15" />
       <nav className="sub-nav">
-        <Link to="/curate/save-exhibition" className="create-exhibition">
+        <Link to="/exhibitions/save-exhibition" className="create-exhibition">
           Create a new exhibition
         </Link>
       </nav>

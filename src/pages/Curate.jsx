@@ -4,6 +4,8 @@ import {
   deleteExhibition,
   setSelectedExhibitionId,
 } from '../store/curateSlice';
+import EditIcon from '../assets/edit.svg?react';
+import DeleteIcon from '../assets/delete.svg?react';
 import './Curate.css';
 
 function Curate() {
@@ -21,7 +23,7 @@ function Curate() {
   return (
     <>
       <nav className="sub-nav">
-        <Link to="/curate/save-exhibition" className="create-exhibition">
+        <Link to="/exhibitions/save-exhibition" className="create-exhibition">
           Create a new exhibition
         </Link>
       </nav>
@@ -32,42 +34,50 @@ function Curate() {
       <ul className="exhibitions-list">
         {exhibitions.map((exhibition) => (
           <li key={exhibition.id}>
-            {exhibition.exhibits.length > 0 ? (
-              <h4>
-                <Link to={`/curate/${exhibition.id}`}>
+            <div className="exhibition-content">
+              {exhibition.exhibits.length > 0 ? (
+                <h4>
+                  <Link to={`/exhibitions/${exhibition.id}`}>
+                    {exhibition.title}{' '}
+                    <span className="exhibit-count">
+                      ({exhibition.exhibits.length} exhibits)
+                    </span>
+                  </Link>
+                </h4>
+              ) : (
+                <h4>
                   {exhibition.title}{' '}
                   <span className="exhibit-count">
                     ({exhibition.exhibits.length} exhibits)
                   </span>
-                </Link>
-              </h4>
-            ) : (
-              <h4>
-                {exhibition.title}{' '}
-                <span className="exhibit-count">
-                  ({exhibition.exhibits.length} exhibits)
-                </span>
-              </h4>
-            )}
-            <p className="mb-15">{exhibition.description}</p>
-            {exhibition.exhibits.length === 0 && (
-              <p className="info">
-                Add to your exhibition by navigating to the{' '}
-                <Link to="/explore">Explore & curate</Link> page
-              </p>
-            )}
+                </h4>
+              )}
+              <p className="mb-15">{exhibition.description}</p>
+              {exhibition.exhibits.length === 0 && (
+                <p className="info mb-0">
+                  Add to your exhibition by navigating to the{' '}
+                  <Link to="/explore">Explore & curate</Link> page
+                </p>
+              )}
+            </div>
             <div className="actions">
               <Link
-                to={`/curate/save-exhibition/${exhibition.id}`}
+                to={`/exhibitions/save-exhibition/${exhibition.id}`}
                 onClick={() => handleSelectExhibition(exhibition.id)}
+                className="edit-link"
+                title="Edit exhibition details"
+                aria-label="Edit exhibition details"
               >
-                Edit details
+                <EditIcon />
               </Link>
               <button
                 type="button"
                 onClick={() => handleDeleteExhibition(exhibition.id)}
+                className="delete-button"
+                title="Delete exhibition"
+                aria-label="Delete exhibition"
               >
-                Delete exhibition
+                <DeleteIcon />
               </button>
             </div>
           </li>
