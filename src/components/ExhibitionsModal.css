@@ -9,4 +9,11 @@
   background-color: transparent;
   cursor: pointer;
   padding: 10px;
+  width: 100%;
+}
+
+@media screen and (min-width: 800px) {
+  .modal-exhibition-list li button {
+    width: auto;
+  }
 }

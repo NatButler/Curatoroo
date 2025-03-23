@@ -3,6 +3,10 @@
   padding: 25px;
 }
 
+.results-info {
+  color: var(--dark-grey);
+}
+
 p.error {
   background-color: var(--red);
   color: var(--white);

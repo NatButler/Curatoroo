@@ -78,7 +78,7 @@ function Results({ collection }) {
     <div>
       {results.pages > 0 && currentPageResults && (
         <>
-          <h3 className="mb-15">
+          <h3 className="mb-15 results-info">
             Displaying page {currentPage} of {results.pages} for &quot;
             {searchTerm}
             &quot; ({results.record_count} results)

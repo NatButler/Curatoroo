@@ -1,3 +1,10 @@
+.exhibitions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
 .create-exhibition {
   background-color: var(--green);
   color: var(--white);

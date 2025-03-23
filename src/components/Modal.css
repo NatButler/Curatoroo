@@ -1,5 +1,5 @@
 .modal {
-  width: 75%;
+  width: 85%;
   height: 500px;
   padding: 2rem;
   border: none;
@@ -25,4 +25,10 @@ button.modal-close-btn {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (min-width: 800px) {
+  .modal {
+    width: 75%;
+  }
 }

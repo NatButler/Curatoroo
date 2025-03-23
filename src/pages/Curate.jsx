@@ -22,12 +22,14 @@ function Curate() {
 
   return (
     <>
-      <nav className="sub-nav">
-        <Link to="/exhibitions/save-exhibition" className="create-exhibition">
-          Create a new exhibition
-        </Link>
-      </nav>
-      <h3 className="mb-15">Exhibitions</h3>
+      <header className="exhibitions-header">
+        <h2 className="mb-0 mt-0">Exhibitions</h2>
+        <nav className="sub-nav">
+          <Link to="/exhibitions/save-exhibition" className="create-exhibition">
+            Create an exhibition
+          </Link>
+        </nav>
+      </header>
       {!exhibitions.length && (
         <p className="instructions">Add an exhibition using the link above.</p>
       )}
