@@ -1,0 +1,37 @@
+.masonry {
+  --gutter: 10px;
+  --flow-space: var(--gutter);
+  --switcher-target-container-width: 28rem;
+}
+
+.masonry img {
+  width: 100%;
+}
+
+.switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gutter, 1em);
+  align-items: var(--switcher-vertical-alignment, flex-start);
+}
+
+.switcher > * {
+  flex-grow: 1;
+  flex-basis: calc(
+    (var(--switcher-target-container-width, 40rem) - 100%) * 999
+  );
+}
+
+.flow > * + * {
+  margin-block-start: var(--flow-space, 1em);
+}
+
+.wrapper {
+  background-color: var(--text);
+  margin-inline: auto;
+  padding-inline: 25px;
+}
+
+.masonry .object-card {
+  width: 100%;
+}
