@@ -3,6 +3,7 @@ import {
   createListenerMiddleware,
   isAnyOf,
 } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import searchReducer, { setSearchTerm } from './searchSlice';
 import metReducer, {
   loadObjects,
@@ -27,7 +28,7 @@ const searchMiddleware = createListenerMiddleware();
 const metPageMiddleware = createListenerMiddleware();
 const vaPageMiddleware = createListenerMiddleware();
 const exhibitionMiddleware = createListenerMiddleware();
-const localStorageMiddleware = createListenerMiddleware();
+const curateMiddleware = createListenerMiddleware();
 
 searchMiddleware.startListening({
   actionCreator: setSearchTerm,
@@ -73,7 +74,7 @@ exhibitionMiddleware.startListening({
   },
 });
 
-localStorageMiddleware.startListening({
+curateMiddleware.startListening({
   matcher: isAnyOf(
     addObjectToExhibition,
     removeObjectFromExhibition,
@@ -82,10 +83,31 @@ localStorageMiddleware.startListening({
     editExhibition
   ),
   effect: (action, listenerApi) => {
+    const selectedObject = listenerApi.getOriginalState().curate.selectedObject;
+
     localStorage.setItem(
       'exhibitions',
       JSON.stringify(listenerApi.getState().curate.exhibitions)
     );
+
+    switch (action.type) {
+      case 'curate/removeObjectFromExhibition':
+        toast('Object removed from exhibition');
+        break;
+      case 'curate/addExhibition':
+        toast(`Exhibition created: "${action.payload.title}"`);
+      case 'curate/addObjectToExhibition':
+        selectedObject ? toast('Object added to exhibition') : null;
+        break;
+      case 'curate/deleteExhibition':
+        toast('Exhibition deleted');
+        break;
+      case 'curate/editExhibition':
+        toast('Exhibition details updated');
+        break;
+      default:
+        toast('Change saved');
+    }
   },
 });
 
@@ -116,5 +138,5 @@ export const store = configureStore({
       .prepend(metPageMiddleware.middleware)
       .prepend(vaPageMiddleware.middleware)
       .prepend(exhibitionMiddleware.middleware)
-      .prepend(localStorageMiddleware.middleware),
+      .prepend(curateMiddleware.middleware),
 });
