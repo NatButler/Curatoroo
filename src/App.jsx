@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import SkipToContent from './components/SkipToContent';
 import Header from './components/Header';
 import NotFound from './pages/NotFound';
@@ -39,6 +40,7 @@ function App() {
             <Route path="/exhibitions/:id" element={<Exhibition />}></Route>
           </Routes>
         </main>
+        <ToastContainer autoClose={1400} hideProgressBar />
       </div>
     </>
   );
