@@ -1,3 +1,8 @@
+.results-wrapper {
+  background-color: var(--text);
+  padding: 25px;
+}
+
 p.error {
   background-color: var(--red);
   color: var(--white);
@@ -15,21 +20,4 @@ p.message {
   color: var(--white);
   text-align: center;
   margin: 20px 0;
-}
-
-.results-list {
-  padding: 15px;
-  flex-direction: column;
-  align-items: center;
-}
-
-.results-list li:last-child {
-  padding-right: 25px;
-}
-
-@media screen and (min-width: 800px) {
-  .results-list {
-    flex-direction: row;
-    align-items: flex-start;
-  }
 }

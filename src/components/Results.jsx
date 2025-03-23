@@ -6,9 +6,8 @@ import { setCurrentPage as setVaCurrentPage } from '../store/vaSlice';
 import { setSelectedObject } from '../store/curateSlice';
 import PageNav from '../components/PageNav';
 import Collapsible from './Collapsible';
-import ObjectCard from './ObjectCard';
 import ExhibitionsModal from './ExhiibitionsModal';
-import ResultsSlider from './ResultsSlider';
+import MasonryResults from './MasonryResults';
 import Loader from './Loader';
 import statuses from '../constants/ajaxStatus';
 import collectionNames from '../constants/collectionNames';
@@ -104,15 +103,7 @@ function Results({ collection }) {
               )}
             </>
           )}
-          <ResultsSlider
-            key={status}
-            resultsLength={
-              currentPageResults?.fulfilled?.length -
-              currentPageResults?.notPublicDomain?.length -
-              currentPageResults?.rejectedCount
-            }
-            itemWidth={265}
-          >
+          <section className="results-wrapper">
             {status === statuses.LOADING ? (
               <Loader darkTheme />
             ) : (
@@ -120,24 +111,13 @@ function Results({ collection }) {
                 {currentPageResults?.fulfilled?.length === 0 && (
                   <p className="message">No results to display</p>
                 )}
-                <ul className="reset results-list">
-                  {currentPageResults?.fulfilled?.map((object) => (
-                    <li key={object.objectID}>
-                      <ObjectCard object={object}>
-                        <button
-                          type="button"
-                          onClick={() => handleOpenExhibitionModal(object)}
-                          className="btn-action"
-                        >
-                          Add to exhibition
-                        </button>
-                      </ObjectCard>
-                    </li>
-                  ))}
-                </ul>
+                <MasonryResults
+                  objects={currentPageResults.fulfilled}
+                  handleOpenExhibitionModal={handleOpenExhibitionModal}
+                />
               </>
             )}
-          </ResultsSlider>
+          </section>
         </>
       )}
       {results?.pages > 1 && (
