@@ -42,7 +42,7 @@ export const vaObjectMap = (object) => ({
 export const vaRecordObjectMap = (object) => ({
   collection: collectionNames.VA,
   objectID: object.record.systemNumber,
-  title: object.record?.titles[0].title || '',
+  title: object.record?.titles.length ? object.record?.titles[0].title : '',
   artistDisplayName:
     (object.record?.artistMakerPerson.length &&
       object.record.artistMakerPerson[0].name?.text) ||
