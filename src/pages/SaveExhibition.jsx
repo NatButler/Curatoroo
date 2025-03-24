@@ -52,7 +52,7 @@ function SaveExhibition() {
     <>
       <BackLink />
       <h2 className="mt-0 mb-15">
-        {id ? 'Save exhibition' : 'Add exhibition'}
+        {id ? 'Save exhibition' : 'Create exhibition'}
       </h2>
       <ExhibitionForm
         formData={formData}

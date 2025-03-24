@@ -31,7 +31,9 @@ function Curate() {
         </nav>
       </header>
       {!exhibitions.length && (
-        <p className="instructions">Add an exhibition using the link above.</p>
+        <p className="instructions">
+          Create a new exhibition using the link above.
+        </p>
       )}
       <ul className="exhibitions-list">
         {exhibitions.map((exhibition) => (
