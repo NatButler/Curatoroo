@@ -21,6 +21,7 @@ function Modal({ isOpen, hasCloseBtn = true, onClose, children }) {
 
   useEffect(() => {
     setModalOpen(isOpen);
+    window.scrollTo(0, 0);
   }, [isOpen]);
 
   useEffect(() => {
