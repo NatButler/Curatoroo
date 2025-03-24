@@ -2,7 +2,7 @@
 
 [Explore & curate app](https://explore-and-curate-app.netlify.app/)
 
-Explore & curate app, is a Single Page Application built with React.js with client-side routing, using Redux for state management, allowing users to search two museum collection APIs. Features include searching both collections simultaneously, with option to specify a confined search on "artist or maker". Users can curate exhibitions from the results, which are persisted using the browsers local storage facility. Planned and implemented using a responsive, mobile-first approach.
+Explore & curate app, is a Single Page Application built with React.js with client-side routing, using Redux for state management, allowing users to search two museum collection APIs. Features include searching both collections simultaneously, with the option to specify a confined search on "artist or maker". Users can curate exhibitions from the results, which are persisted using the browsers local storage facility. Planned and implemented using a responsive, mobile-first approach.
 
 ## Requirements
 
