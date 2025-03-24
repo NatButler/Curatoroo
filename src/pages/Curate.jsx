@@ -26,7 +26,7 @@ function Curate() {
         <h2 className="mb-0 mt-0">Exhibitions</h2>
         <nav className="sub-nav">
           <Link to="/exhibitions/save-exhibition" className="create-exhibition">
-            Create an exhibition
+            Create exhibition
           </Link>
         </nav>
       </header>
