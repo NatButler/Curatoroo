@@ -19,7 +19,12 @@ function Collapsible({ label, children, defaultOpen = false }) {
 
   return (
     <div className="toggle-wrap">
-      <button type="button" className={toggleClass} onClick={toggle}>
+      <button
+        type="button"
+        className={toggleClass}
+        onClick={toggle}
+        title="Click to show details"
+      >
         {label}
       </button>
       <div
