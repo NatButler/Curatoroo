@@ -23,7 +23,7 @@ function Collapsible({ label, children, defaultOpen = false }) {
         type="button"
         className={toggleClass}
         onClick={toggle}
-        title="Click to show details"
+        title={open ? 'Click to hide details' : 'Click to show details'}
       >
         {label}
       </button>
