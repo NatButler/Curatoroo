@@ -6,13 +6,13 @@ Explore & curate app, is a Single Page Application built with React.js with clie
 
 ## Requirements
 
-You will need Node.js >= v20 installed.
+You will need Node.js >= v20 installed, including npm, as well as git.
 
 ## Local setup
 
 To run this project locally:
 
-1. `git clone` the repo using the URL under the "<> Code" button in GitHub.
+1. In a terminal, use the `git clone` command followed by the URL specified under the "<> Code" button when viewing the repo in GitHub, to clone the repo locally.
 
 2. `cd` into the newly created directory and run `npm install` to install all necessary dependencies.
 
